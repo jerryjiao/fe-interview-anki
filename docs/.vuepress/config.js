@@ -3,9 +3,14 @@ module.exports = {
   description: 'This is a Zeit Now 2.0 example',
   themeConfig: {
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Guide', link: '/guide/' },
-      { text: 'Config Page', link: '/config' },
+      { text: 'Home', link: '/index' },
+      { text: 'Config Page', link: '/config' }
     ]
-  }
+  },
+  plugins: [
+    ['@vuepress/back-to-top', true],
+    ['@vuepress/pwa', {
+      serviceWorker: true,
+      updatePopup: true
+    }]]
 }
