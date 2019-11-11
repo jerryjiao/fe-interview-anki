@@ -15,7 +15,7 @@ A: 1、static（静态定位）：默认值。没有定位，元素出现在正�
 正确的是：只要父级元素设了position并且不是static（默认既是static），那么设定了absolute的子元素即以此为包含块（最近的）。
 绝对定位（Absolute positioning）元素定位的参照物是其包含块，既相对于其包含块进行定位，不一定是其父元素。
 
-
+## React相关
 Q: setState的过程
 
 A: 可以翻译：https://css-tricks.com/understanding-react-setstate/
