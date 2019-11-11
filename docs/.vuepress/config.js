@@ -1,6 +1,6 @@
 module.exports = {
-  title: 'Vuepress',
-  description: 'This is a Zeit Now 2.0 example',
+  title: '前端基础知识艾宾浩斯记忆',
+  description: '前端基础知识艾宾浩斯记忆（anki）',
   themeConfig: {
     nav: [
       { text: 'Home', link: '/index' },

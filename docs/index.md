@@ -1,7 +1,7 @@
 ---
 sidebar: auto
 ---
-# 前端基础知识anki卡片
+# 前端基础知识艾宾浩斯记忆（anki）
 ## 变量类型和计算
 ### 知识点
 #### 变量类型
@@ -34,7 +34,7 @@ A:
 
 Q: typeOf能判断哪些类型
 
-A: 原始类型null会返回object,其它的原始类型都能准确判断。
+A: 原始类型null会返回object,其它的原始类型都能准确判断。<br />
    引用类型能准确判断function,其它的引用类型如数组等都会判断为object
 
 
@@ -57,15 +57,35 @@ A:
    ‘===’不会自动类型转换 <br/>
    推荐平时使用用
 
+Q: 什么是falsely变量
+
+A: falsely变量就是双非之后为false的变量
+```
+!! NaN === false
+```
+
+if判断和逻辑运算，都是判断truely和falsely变量而不是直接判断true和false
+例如：
+```
+''&&'10' // ''
+100 || NaN // 100
+```
+
 Q: 怎样区分truely和falsely变量
 
 A: 
 
+以下为falsely变量：
+*  0
+*  NaN
+*  ''
+*  null
+*  undefined
+*  false
+其它都是truely变量
+
+
 ### 题目
-
-Q: 怎样判断Array类型
-
-A: instanceOf
 
 Q: 手写深拷贝
 
@@ -97,3 +117,21 @@ function deepClone(entry) {
     return result 
 }
 ```
+
+## 原型和原型链
+
+### 知识点
+
+### class继承
+
+Q: 如何构建一个Class
+
+A: 
+
+### 原型链
+
+### 题目
+
+Q: 如何判断数组类型
+
+A: instanceOf
