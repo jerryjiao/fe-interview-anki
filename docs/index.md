@@ -122,11 +122,58 @@ function deepClone(entry) {
 
 ### 知识点
 
-### class继承
+#### 原型
+
+Q: instacneOf的作用？
+
+A: 判断属于哪个class或者哪个构造函数，可以用来判断数组
+
+Q: 简单介绍原型
+
+A:
+
+* 每个class都有显示原型 prototype
+* 每个实例都有隐式原型 _proto_Í
+* 实例的_proto_指向对应class的prototype
+
+Q: 简述原型的执行规则
+
+A: 执行属性或者执行方法时，现在自身的属性和方法中寻找，如果找不到则在_proto_中寻找
+
+#### class
 
 Q: 如何构建一个Class
 
+A:
+
+* constructor
+* 属性
+* 方法
+
+Q: 如何用class实现继承？（简单代码实现）
+
 A: 
+```
+class Animal() {
+    constructor(name) {
+        this.name = name
+    }
+
+    eat() {
+        console.log(`${this.name} is eating`)
+    }
+}
+
+class Dog extends Animal() {
+    constructor(name, number) {
+        super(name)
+        this.number = number
+    }
+    run() {
+        console.log(`${this.name} is running`)
+    }
+}
+```
 
 ### 原型链
 
