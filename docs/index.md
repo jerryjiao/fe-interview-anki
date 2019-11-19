@@ -202,7 +202,9 @@ Q: 什么是作用域?
 
 A: 
 就是变量作用的范围，如图所示即为作用域
-![](https://raw.githubusercontent.com/jerryjiao/imageUrl/master/WX20191113-224427%402x.png?token=ADBBE7BMFMKEAG4AMFFORIC5ZQNV4)
+
+![](/img/WX20191113-224427@2x (1).png)
+
 
 Q: 作用域分几种类型？
 
@@ -289,11 +291,49 @@ const c = new fn() // new之后，this会绑定在实例c上
 ### 题目
 
 
-Q: 手写bind函数
+Q: Bind方法有什么作用？手写bind函数
 
-Q: 实际开发中的闭包场景，举例说明
+A: 
+bind()方法创建一个新的函数，在bind()被调用时，这个新函数的this被bind的第一个参数指定，其余的参数将作为新函数的参数供调用时使用。
 
-Q: 创建10个`<a>`标签，点击的时候弹出对应的对象
+```
+// 模拟 bind
+Function.prototype.bind1 = function() {
+    // 将参数拆解为数组
+    const args = Array.prototype.slice.call(arguments)
+
+    // 获取this（数组第一项）
+    const t = args.shift()
+
+    // fn1.bind(...)中的fn1
+    const self = this
+
+    // 返回一个函数
+    return function () {
+        return self.apply(t, args)
+    }
+}
+```
+
+Q: 实际开发中的闭包场景，举例说明 （引用）
+
+A: 
+* 隐藏数据
+* 做一个简单的cache工具
+
+Q: 创建10个`<a>`标签，点击的时候弹出对应的对象（引用）
+```
+let a
+for(let i=0;i<10;i++) {
+    a=document.createElement('a')
+    a.innerHTML = i + '<br>'
+    a.addEventListener('click', function(e){
+        e.preventDefault()
+        alert(i)
+    })
+    document.body.appendChild(a)
+}
+```
 
 Q: 以下代码的执行结果（引用）
 
@@ -342,3 +382,21 @@ const children = {
 A: 
 这里会打印出window,因为在setTimeout中，是一个普通函数的执行
 如果想指向这个对象，可以把这个函数变为箭头函数
+
+## 异步与同步
+
+### 知识点
+
+### 题目
+
+Q: 同步和异步的区别是什么？(异步)
+
+A: 
+
+Q: 手写用Promise 加载一张图片（异步）
+
+A: 
+
+Q: 前端使用异步的场景有哪些 (异步)
+
+A:
