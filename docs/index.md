@@ -203,7 +203,7 @@ Q: 什么是作用域?
 A: 
 就是变量作用的范围，如图所示即为作用域
 
-![](/img/WX20191113-224427@2x (1).png)
+![](https://raw.githubusercontent.com/jerryjiao/imageUrl/master/1.png?token=ADBBE7CEZHFJFXGBTWBPWEK52VJIE)
 
 
 Q: 作用域分几种类型？
@@ -386,7 +386,9 @@ A:
 ## 异步与同步
 
 ### 知识点
-
+* 单线程和异步
+* 应用场景
+* callback hell 和 Promise
 ### 题目
 
 Q: 同步和异步的区别是什么？(异步)
@@ -400,3 +402,8 @@ A:
 Q: 前端使用异步的场景有哪些 (异步)
 
 A:
+
+Q: 以下如图所示程序的执行结果：
+![](https://raw.githubusercontent.com/jerryjiao/imageUrl/master/WX20191120-225142@2x.png?token=ADBBE7DP5DMZU7JUUFCIE4K52VJUU)
+
+A: 
