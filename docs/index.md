@@ -532,7 +532,8 @@ A:
 xml， 是一种可扩展的标志性结构语言，是一棵树
 html是一种特定的xml,规定了一些标签的名称
 html是树型结构
-dom的本质是一颗树
+dom的本质是从Html语言解析出的一颗树
+可以认为 DOM 就是 JS 能识别的 HTML 结构，一个普通的 JS 对象或者数组。
 ```
 <!DOCTYPE html>
 <html lang="en">
@@ -546,9 +547,141 @@ dom的本质是一颗树
 </html>
 ```
 
-Q； attr和property的区别
+Q: 获取节点有哪些方法
+
+A: 
+```
+const a1 = document.getElementById('a1') // 通过元素id选择
+const titleList = document.getElementsByClassName('.title') // 通过class选择
+const pList = document.getElementsByTagName('p') // 选择所有p元素。返回的是一个集合
+
+const divList= document.querySelectorAll('div')  // 选择所有p元素。返回的是一个集合
+```
+getElementsByTagName方法返回的是HTMLCollection对象。
+
+querySelectorAll方法返回的是NodeList对象。
+
+两者的区别：
+
+1. getElementsByTagName 获取的是动态集合，querySelector获取的是静态集合。
+2. getElementsByTagName更快
+
+Q； 什么是property？(引用小册)
+
+A: 
+
+property:
+dom是一个对象。通过getxxxxbyxxx方法获取到对象以后，可以通过js修改一些属性，这些属性就是property。property是JS范畴的属性，符合JS的标准
+如以下代码,style就是property
+
+```
+var pList = document.querySelectorAll('p')
+var p = pList[0]
+console.log(p.style.width)  // 获取样式
+```
+
+Q: 什么是attribute?（引用小册）
+
+A: 
+
+attribute:
+
+property 的获取和修改，是直接改变 JS 对象，而 attribute 是直接改变 HTML 的属性，两种有很大的区别。attribute 就是对 HTML 属性的 get 和 set，和 DOM 节点的 JS 范畴的 property 没有关系。
+
+```
+var pList = document.querySelectorAll('p')
+var p = pList[0]
+p.getAttribute('data-name')
+p.setAttribute('data-name', 'juejin')
+p.getAttribute('style')
+p.setAttribute('style', 'font-size:30px;')
+```
+
+Q: attribute和property的区别(引用课程)
+
+A:
+
+* property:修改对象属性，不会体现到html结构中
+* attribute: 修改html属性，会改变html结构
+* 两者都有可能引起DOM重新渲染
+
+Q: 新增/插入节点
+
+A:
+
+```
+// 创建节点，然后新增节点
+const div = document.getElementById('div')
+const span1 = document.createElement('span')
+div.appendChild(span1)
+
+// 如果选择已有节点，就是移动节点
+const span2 = document.getElementById('span')
+div.appendChild(span2)
+```
+
+Q: 删除节点
+
+A: 
+```
+const ele = document.getElementById('title')
+const child = ele.childNodes
+ele.removeChild(child[0])
+```
+
+Q: 获取子元素列表
+
+A: 
+```
+const ele = document.getElementById('title')
+const child = ele.childNodes
+```
+
+Q: 获取父元素
+
+A:
+```
+const ele = document.getElementById('title')
+const parent = ele.parentNode
+```
+
+Q: 优化Dom性能（引用）
+
+* 避免频繁的操作Dom
+* 可以对一些需要重复利用的做缓存
+* 将频繁操作改为一次性操作
+
 #### BOM
 
+Q: 怎样获得用户用的哪个浏览器
+
+A: 
+
+```
+const uaInfo = navigator.userAgent
+const isSafari = uaInfo.indexOf('Safari')
+```
+
+Q: 如何获得屏幕的宽和高
+
+A:
+
+```
+const screenWidth = screen.width
+const screenHeight = screen.height
+```
+
+Q: location
+
+A: 
+
+Q: 怎样让浏览器前进和后退
+
+A: 
+```
+history.back()
+history.forward()
+```
 ## 事件绑定
 
 ## ajax
@@ -560,3 +693,17 @@ Q； attr和property的区别
 Q：一次性插入多个DOM节点，考虑性能
 
 A:
+
+利用`document.createDocumentFragment()`，把多次的操作转换为一次操作
+
+```
+const fragment = document.createDocumentFragment()
+
+// 把三个节点放入fragment中
+fragment.appendChild(span1)
+fragment.appendChild(span2)
+fragment.appendChild(span3)
+
+// 放完之后，整体放入DOM树中
+div.appendChild(fragment)
+```
