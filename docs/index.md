@@ -201,7 +201,7 @@ class Dog extends Animal() {
 Q: 什么是作用域?
 
 A: 
-就是变量作用的范围，如图所示即为作用域
+就是变量作用的范围，如图所示即为作用域（这里图要换）
 
 ![](https://raw.githubusercontent.com/jerryjiao/imageUrl/master/1.png?token=ADBBE7CEZHFJFXGBTWBPWEK52VJIE)
 
@@ -682,12 +682,6 @@ A:
 history.back()
 history.forward()
 ```
-## 事件绑定
-
-## ajax
-
-## 存储
-
 ### 题目
 
 Q：一次性插入多个DOM节点，考虑性能
@@ -707,3 +701,229 @@ fragment.appendChild(span3)
 // 放完之后，整体放入DOM树中
 div.appendChild(fragment)
 ```
+
+## 事件绑定
+### 知识点
+* 事件绑定
+* 事件冒泡
+* 事件代理
+
+Q: 如何进行事件绑定？
+A: 
+```
+const btn = document.getElementById('button')
+btn.addEventListener('click', event => {
+    alert('clicked')
+})
+```
+
+Q: 什么是事件冒泡
+
+A:
+事件会像冒泡一样，顺着触发元素，一层一层往上冒
+就是在上级能监听到，bindEvent其实只是监听
+事件冒泡就是说，它的上级元素也能监听到那个事件
+
+事件代理也是应用事件冒泡的机制
+
+Q: 怎样阻止默认操作？
+
+A: 
+阻止默认事件，例如阻止a的跳转
+
+```
+e.preventDefault  // 阻止默认事件
+```
+
+Q: 怎样阻止事件冒泡？
+
+A:
+
+```
+e.stopPropagation() // 阻止事件冒泡
+```
+
+Q: 什么是事件代理？
+
+A: 
+事件代理，就是当不好确定事件绑定在哪里的时候，
+可以统一绑定在父元素上
+然后父元素上要加一些判断和操作，
+一般用在瀑布流
+
+它的好处是可以少写一些代码，因为不用每个标签都绑定事件，
+所以也可以减少浏览器内存占用
+
+
+### 题目
+Q: 编写一个通用的事件监听函数
+
+A: 
+```
+function bindEvent(ele, type, selector, fn) {
+    // 如果是有三个参数的话，第三个参数就为fn
+    if(fn == null) {
+        fn = selector
+        selector =null
+    }
+
+    ele.addEventListener(type, event => {
+        const target = event.target
+        if(selector) {
+            // 代理绑定，用matched匹配元素
+            // 用call传入target绑定this
+            if(target.matches(selector)) {
+                fn.call(target, event)
+            } else {
+                fn.call(target, event)
+            }
+        }
+    })
+}
+```
+
+Q: 无限下拉的图片列表，如何监听每个图片的点击?
+
+A:
+
+* 使用事件代理
+* 通过e.target获取触发元素
+* 用matches来判断是否触发元素    
+## ajax
+### 知识点
+* XMLHttpRequest
+* 状态码
+* 跨域:同源策略， 跨域解决方案
+
+Q: 实现一个get请求(引用)
+
+A:
+
+```
+const xhr = new XMLHttpRequest()
+xhr.open('GET', '/data/test.json', true)
+xhr.onreadystatechange = function () {
+    if（xhr.readyState === 4） {
+        if(xhr.status === 200) {
+            console.log(xhr.responseText)
+        }
+    }
+}
+xhr.send(null)
+```
+
+Q: 实现一个post请求(引用)
+
+A:
+```
+const xhr = new XMLHttpRequest()
+xhr.open('POST', '/login', true)
+xhr.onreadystatechange = function() {
+    if(xhr.readyState === 4) {
+        if(xhr.status === 200) {
+            console.log(xhr.responseText)
+        } else {
+            console.log('其它情况')
+        }
+    }
+}
+
+const postData = {
+    userName: 'zhangsan',
+    password: 'xxx'
+}
+// 转换为json格式
+xhr.send(JSON.stringify(postData))
+```
+
+Q: xhr.readyState有哪些状态？
+
+A: 
+
+| 值 | 状态 | 描述 |
+| --- | --- | --- |
+| 0 | UNSENT | (未初始化)代理被创建，但尚未调用 open() 方法。|
+| 1 | OPENED | (载入)open() 方法已经被调用。|
+| 2	| HEADERS_RECEIVED |	(载入完成)send()方法已经被调用，并且头部和状态已经可获得。|
+| 3	| LOADING |	下载中； (交互)responseText 属性已经包含部分数据。 |
+| 4	| DONE | (完成)下载操作已完成。|
+
+Q: 请求的状态码有哪些
+
+A:
+
+* 2xx - 成功请求， 例如:200
+
+* 3xx - 重定向, 例如:301 永久重定向， 302临时重定向, 304 服务器表示资源未改变，浏览器会用自己本身的缓存的资源
+
+* 4xx - 客户端错误，例如:404找不到，403客户端没有权限
+
+* 5xx - 服务器端错误
+
+
+Q: 什么是跨域？
+
+A:
+
+想要理解跨域，就要理解同源。
+同源的意思是: 协议， 域名， 端口， 三者一致(必须在一个域下)
+ajax请求时，浏览器要求当前网页和server必须同源。
+当不是同源的时候，需要使用跨域去解决这个问题
+
+现在所有的跨域，都必须服务端的允许和配合，
+未经服务端允许就实现跨域，说明有漏洞
+
+Q: 有哪些标签可以无视同源策略? 有什么作用
+
+A: 
+
+注意:
+加载图片,css,js可无视同源策略
+
+* `<img src='跨域的图片地址' />`, 可用于统计打点，使用第三方统计服务
+* `<ilnk href=‘跨域的css地址’ />`, 可使用CDN， CDN一般是外域
+* `<script src='跨域的js地址'></script>`，可实现JSONP
+
+Q: JSONP的原理？（引用）
+
+A:
+
+* `<script> 可以绕过跨域限制`
+* 服务器可以任意动态拼接数据返回
+
+其实就是引用一个外部的script， 但是这个script是服务器拼接的，这个拼接的js中一般是有一个函数，这个函数返回需要的数据。这样在页面的就能调用这个函数拿到数据了。
+
+Q: cors是怎样实现跨域的？
+
+A:
+cors就是服务端在返回的header里面加一下标记，这样来实现跨域
+
+```
+// 可以直接写为*
+response.setHeader("Access-Control-Allow-Origin", "http://localhost:8011");
+response.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
+response.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS")ß
+
+// 接受跨域的cookie
+
+response.setHeader("Access-Control-Allow-Credentials", "true");
+```
+TODO: 9-4
+
+### 题目
+Q: 手写一个简易的ajax
+
+A:
+
+Q: 跨域的常用实现方式
+
+A:
+
+Jsonp
+cors
+
+Q: 简单实现一个Jsonp （TODO：看 面试之道小册）
+
+A: 
+
+## 存储
