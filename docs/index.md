@@ -908,13 +908,32 @@ response.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTI
 
 response.setHeader("Access-Control-Allow-Credentials", "true");
 ```
-TODO: 9-4
 
 ### 题目
 Q: 手写一个简易的ajax
 
 A:
-
+```
+function ajax(url) {
+    const p = new Promise((resolve, reject) => {
+        const xhr = XMLHttpRequest()
+        xhr.open('GET', url, true)
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState === 4) {
+                if(xhr.status === 200) {
+                    resolve(
+                        JSON.parse(xhr.responseText)
+                    )
+                } else if (xhr.status === 404) {
+                    reject(new Error('404 not found'))
+                }
+            }
+        }
+        xhr.send(null)
+    })
+    return p
+}
+```
 Q: 跨域的常用实现方式
 
 A:
