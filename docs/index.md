@@ -6,95 +6,133 @@ sidebar: auto
 ### 知识点
 #### 变量类型
 
-Q: 原始类型有哪些
+Q:
 
-A: 
+原始类型有哪些
+
+A:
+
 * Boolean
 * Number
 * String
 * Null
 * Undefined
-* Symbol(es6加入)
+* Symbol（ES6加入）
 
-Q: 引用类型有哪些
+Q:
 
-A: 对象
-   数组
-   函数
-   Date
-   RegExp（正则）
+引用类型有哪些？
 
-Q: 值类型与引用类型的区别
+A:
 
-A: 
-   1. 值类型存在栈中
-   2. 引用类型存在堆栈中
-   3. 复制值类型，新的值改变对老值无影响
-   4. 复制引用类型，复制的只是保存这个变量的地址，新的值改变对老值也会跟着改变
+- 对象
+- 数组
+- 函数
+- Date
+- RegExp（正则）
 
-Q: typeOf能判断哪些类型
+Q:
 
-A: 原始类型null会返回object,其它的原始类型都能准确判断。<br />
-   引用类型能准确判断function,其它的引用类型如数组等都会判断为object
+原始类型与引用类型的区别
+
+A:
+
+1. 原始类型存在 **栈内存** 中
+2. 引用类型存在 **堆内存** 中
+3. 复制原始类型：复制出来的值的改变对被复制的值无影响
+4. 复制引用类型：复制的只是保存这个变量的地址，复制的值改变，被复制的值也会跟着改变
+
+Q:
+
+`typeof` 能判断哪些类型？
+
+A:
+
+原始类型 `null` 会返回 `object` ，其它的原始类型都能准确判断。
+
+引用类型能准确判断 `function` ，其它的引用类型如数组等都会判断为 `object`。
 
 
 #### 变量计算
 
-Q: 如何进行字符串拼接
+Q:
 
-A: 可以使用'+'符号
-```
-const a = 10+10 // 20
+如何进行字符串拼接？
+
+A:
+
+可以使用 `+` 符号
+
+```js
+const a = 10 + 10 // 20
 const b = 10 + '10' // '1010'
 const c = undefined + 10 //NaN
 const d = undefined + '10' // 'undefined100'
 ```
 
-Q: '==' 与 '==='的区别
+Q:
 
-A: 
-   ‘==’会进行自动类型转换 <br/>
-   ‘===’不会自动类型转换 <br/>
-   推荐平时使用用
+`==` 与 `===` 的区别
 
-Q: 什么是falsely变量
+A:
 
-A: falsely变量就是双非之后为false的变量
-```
+`==` 会进行自动类型转换
+
+`===`不会自动类型转换
+
+推荐平时使用用
+
+Q:
+
+什么是 falsely 变量？*
+
+A:
+
+falsely 变量就是双非之后为 `false` 的变量
+
+```js
 !! NaN === false
 ```
 
-if判断和逻辑运算，都是判断truely和falsely变量而不是直接判断true和false
+if 判断和逻辑运算，都是判断 truely 和 falsely 变量而不是直接判断 `true` 和 `false`
+
 例如：
-```
-''&&'10' // ''
+
+```js
+'' && '10' // ''
 100 || NaN // 100
 ```
 
-Q: 怎样区分truely和falsely变量
+Q:
 
-A: 
+怎样区分 truely 和 falsely 变量
 
-以下为falsely变量：
+A:
+
+以下为 falsely 变量：
 *  0
 *  NaN
 *  ''
 *  null
 *  undefined
 *  false
-其它都是truely变量
+
+其它都是 truely 变量
 
 
 ### 题目
 
-Q: 手写深拷贝
+Q:
 
-A: 
-```
+手写深拷贝
+
+A:
+
+```js
 function deepClone(entry) {
     let result = null
     // step1: 如果入参是值类型就返回
-    if(typeof entry!=='object'|| entry==null) {
+    if(typeof entry !== 'object' || entry == null) {
         // 递归真正执行的语句
         return entry
     }
@@ -102,7 +140,7 @@ function deepClone(entry) {
     if(entry instanceof Array) {
         result = []
     } else {
-        result ={}
+        result = {}
     }
 
     // Step3:
@@ -110,11 +148,11 @@ function deepClone(entry) {
         // 对原型的处理
         if(entry.hasOwnProperty(key)){
             // 此处递归
-            result[key]=deepClone(entry[key])
+            result[key] = deepClone(entry[key])
         }
     }
-    
-    return result 
+
+    return result
 }
 ```
 
@@ -124,34 +162,61 @@ function deepClone(entry) {
 
 #### 原型
 
-Q: instacneOf的作用？
+Q:
 
-A: 判断属于哪个class或者哪个构造函数，可以用来判断数组
+`instacneof` 的作用？
 
-Q: 简单介绍原型
 
 A:
 
-* 每个class都有显示原型 prototype
-* 每个实例都有隐式原型 _proto_
-* 实例的_proto_指向对应class的prototype
+判断属于哪个 class 或者哪个构造函数，可以用来判断数组。
+
+class：
+
+```js
+class Variety {}
+let variety = new Variety();
+
+alert( variety instanceof Variety ); // true
+```
+
+构造函数：
+
+```js
+function Variety() {}
+
+alert( new Variety() instanceof Variety ); // true
+```
+
+Q:
+
+简单介绍原型
+
+A:
+
+* 每个 class 都有 **显式** 原型 prototype 。
+* 每个实例都有 **隐式** 原型 `_proto_` 。
+* 实例的 `_proto_` 指向对应 class 的 prototype 。
 
 #### 原型链
 
-Q: 简述原型,原型链的执行规则
+Q:
 
-A: 
+简述原型，原型链的执行规则
+
+
+A:
 
 1. 如果实例中有⾃身属性则直接使⽤⾃身的属性，如果没有则会在⾃身的隐式原型链中去找，
-⼀直找到最顶级Object为⽌，如果都找不到，则最后返回的null
-2. 每个构造函数都有⼀个显式原型，且每个显式原型都会对应有⼀个隐式原型，⽽他的
-隐式原型的⽗级⼜有个显式原型，他们都是⼀级级往上寻找的，然后⼀直找到树形结构的第⼀层(Object)为终
-点。
+⼀直找到最顶级 Object 为⽌，如果都找不到，则最后返回：`null`
+2. 每个构造函数都有⼀个显式原型，且每个显式原型都会对应有⼀个隐式原型，⽽他的隐式原型的⽗级⼜有个显式原型，他们都是⼀级级地往上寻找的，然后⼀直找到树形结构的第⼀层（Object）为终点。
 3. instanceof是为判断此实例或构造函数是否是⽗级继承的
 
 #### class
 
-Q: 如何构建一个Class
+Q:
+
+如何构建一个 class
 
 A:
 
@@ -161,14 +226,21 @@ A:
 
 ### 题目
 
-Q: 如何判断数组类型
+Q:
 
-A: instanceOf
+如何判断数组类型
 
-Q: 如何用class实现继承？（简单代码实现）
+A:
 
-A: 
-```
+instanceof
+
+Q:
+
+如何用 class 实现继承？（简单代码实现）
+
+A:
+
+```js
 class Animal() {
     constructor(name) {
         this.name = name
@@ -198,90 +270,124 @@ class Dog extends Animal() {
 * this
 * 作用域和自由变量
 
-Q: 什么是作用域?
+Q:
 
-A: 
+什么是作用域?
+
+A:
+
 就是变量作用的范围，如图所示即为作用域（这里图要换）
 
 ![](https://raw.githubusercontent.com/jerryjiao/imageUrl/master/1.png?token=ADBBE7CEZHFJFXGBTWBPWEK52VJIE)
 
+Q:
 
-Q: 作用域分几种类型？
+作用域分几种类型？
 
 A:
+
 * 全局作用域
 * 函数作用域
-* 块级作用域(es6)
+* 块级作用域（ES6）
 
-Q: 什么是自由变量？自由变量的值是什么时候定义？怎么寻找？
+Q:
 
-A: 
+什么是自由变量？自由变量的值是什么时候定义？怎么寻找？
+
+A:
+
 * 一个变量在当前作用域没有定义，但被使用了
 * 自由变量时在定义函数的时候，值就确定了（一定是在定义的时候，而不是执行的时候）
 * 自由变量的值，是向上级作用域寻找，一层一层寻找，直到找到为止
 * 如果找不到，会报错 xx is not defined
 
-Q: 什么是闭包？
+Q:
 
-A: 闭包就是作用域运用的特殊情况
-   MDN:
-   函数与对其状态即词法环境（lexical environment）的引用共同构成闭包（closure）。也就是说，闭包可以让你从内部函数访问外部函数作用域。在JavaScript，函数在每次创建时生成闭包。
+什么是闭包？
 
-   如果在函数里面可以访问外面的变量，那么这个函数+这些变量 = 闭包
+A:
 
-Q: 闭包的两种情况
+闭包就是作用域运用的特殊情况
 
-A: 
+MDN:
+函数与对其状态即词法环境（lexical environment）的引用共同构成闭包（closure）。也就是说，闭包可以让你从内部函数访问外部函数作用域。
+在 JavaScript，函数在每次创建时生成闭包。
+
+如果在函数里面可以访问外面的变量，那么这个`函数` + 这些 `变量` = `闭包`
+
+Q:
+
+闭包的两种情况
+
+A:
+
 1. 函数作为参数被传递
 2. 函数作为返回值被返回
 
-Q: 闭包的两种情况请用代码举例
+Q:
 
-A: 
-```
+闭包的两种情况请用代码举例
+
+A:
+
 1. 函数作为参数
 
-function create(fn) {
-    let a = 200
-    fn() 
-}
+    ```js
+    function create(fn) {
+        let a = 200
+        fn()
+    fn()
+        fn()
+    fn()
+        fn()
+    fn()
+        fn()
+    fn()
+        fn()
+    }
 
-function fn() {
-    console.log(a)
-}
+    function fn() {
+        console.log(a)
+    }
 
-create(fn)
+    create(fn)
+    ```
 
 2. 函数作为返回值被返回
 
-function create() {
-    let a = 100
-    return function(){
-        console.log(a)
+    ```js
+    function create() {
+        let a = 100
+        return function(){
+            console.log(a)
+        }
     }
-}
-```
-Q: this的不同场景，怎么取值？
+    ```
 
-A: 
-```
+Q:
+
+this的不同场景，怎么取值？
+
+A:
+
+```js
 fn() {
-    console.log(this) 
+    console.log(this)
 }
 fn() // 普通函数，this为window
 ----------------------------------------------
 obj = {
-    fn: fn 
+    fn: fn
 }
 obj.fn() // 作为对象方法，this的值为这个对象
 ----------------------------------------------
-const fn2 = fn.bind({a:1}) 
+const fn2 = fn.bind({a:1})
 fn2()  // 使用bind/call/apply的话，this即为传入的{a:1}
 ----------------------------------------------
-const b = ()=> {console.log(b)} 
+const b = ()=> {console.log(b)}
 
 obj2 = {
-    b:b 
+    b:b
 }
 obj2.b()// 箭头函数的this继承父级,这里会打印出window
 ----------------------------------------------
@@ -290,13 +396,15 @@ const c = new fn() // new之后，this会绑定在实例c上
 
 ### 题目
 
+Q:
 
-Q: Bind方法有什么作用？手写bind函数
+bind 方法有什么作用？手写 bind 函数
 
-A: 
-bind()方法创建一个新的函数，在bind()被调用时，这个新函数的this被bind的第一个参数指定，其余的参数将作为新函数的参数供调用时使用。
+A:
 
-```
+`bind()` 方法创建一个新的函数，在 `bind()` 被调用时，这个新函数的 `this` 被 `bind` 的第一个参数指定，其余的参数将作为新函数的参数供调用时使用。
+
+```js
 // 模拟 bind
 Function.prototype.bind1 = function() {
     // 将参数拆解为数组
@@ -315,14 +423,20 @@ Function.prototype.bind1 = function() {
 }
 ```
 
-Q: 实际开发中的闭包场景，举例说明 （引用）
+Q:
 
-A: 
+实际开发中的闭包场景，举例说明 （引用）
+
+A:
+
 * 隐藏数据
 * 做一个简单的cache工具
 
-Q: 创建10个`<a>`标签，点击的时候弹出对应的对象（引用）
-```
+Q:
+
+创建10个 `<a>` 标签，点击的时候弹出对应的对象（引用）
+
+```js
 let a
 for(let i=0;i<10;i++) {
     a=document.createElement('a')
@@ -335,9 +449,11 @@ for(let i=0;i<10;i++) {
 }
 ```
 
-Q: 以下代码的执行结果（引用）
+Q:
 
-```
+以下代码的执行结果（引用）
+
+```js
 function create() {
     let a = 100
     return function(){
@@ -349,10 +465,15 @@ let a = 200
 fn()
 ```
 
-A: 100
+A:
 
-Q: 以下代码的执行结果(引用)
-```
+100
+
+Q:
+
+以下代码的执行结果（引用）
+
+```js
 function print(fn) {
     let a = 200
     fn()
@@ -365,10 +486,15 @@ function fn() {
 print(fn)
 ```
 
-A: 100
+A:
 
-Q: 以下题目中的this指向哪里?
-```
+100
+
+Q:
+
+以下题目中的 this 指向哪里？
+
+```js
 const children = {
     watching() {
         setTimeout(function(){
@@ -376,13 +502,13 @@ const children = {
         })
     }
 }
-
 ```
 
-A: 
+A:
 
-这里会打印出window,因为在setTimeout中，是一个普通函数的执行
-如果想指向这个对象，可以把这个函数变为箭头函数
+这里会打印出 `window` ,因为在 `setTimeout` 中，是一个普通函数的执行。
+
+如果想指向这个对象，可以把这个函数变为箭头函数。
 
 ## 异步与同步
 
@@ -393,7 +519,7 @@ A:
 
 Q: 同步与异步的区别？
 
-A: 
+A:
 
 同步会阻塞后面程序的运行，
 而异步不会阻塞后面程序的运行。
@@ -436,7 +562,7 @@ $.post(url1, (data1) =>{
 
 Q: Promise 的基本写法
 
-A: 
+A:
 ```
 function getData(url) {
     return new Promise((resolve, reject) => {
@@ -450,7 +576,7 @@ function getData(url) {
 
 Q: Promise有几种状态
 
-A: 
+A:
 三种：
 
 1.pending  // 正在执行
@@ -459,7 +585,7 @@ A:
 
 Q: 什么是Promise链？
 
-A: 
+A:
 Promise可以链式调用，并且上一个then中return的值，是下一个then的入参
 例如
 ```
@@ -483,7 +609,7 @@ start()
 
 Q: 手写用Promise 加载一张图片（异步）
 
-A: 
+A:
 
 ```
 function loadImg(src) {
@@ -527,7 +653,7 @@ A: 1,3, 5, 4, 2
 
 Q: DOM的本质
 
-A: 
+A:
 了解HTML首先要描述xml的概念
 xml， 是一种可扩展的标志性结构语言，是一棵树
 html是一种特定的xml,规定了一些标签的名称
@@ -542,14 +668,14 @@ dom的本质是从Html语言解析出的一颗树
     <title>Document</title>
 </head>
 <body>
-    <div>hello world</div>    
+    <div>hello world</div>
 </body>
 </html>
 ```
 
 Q: 获取节点有哪些方法
 
-A: 
+A:
 ```
 const a1 = document.getElementById('a1') // 通过元素id选择
 const titleList = document.getElementsByClassName('.title') // 通过class选择
@@ -568,7 +694,7 @@ querySelectorAll方法返回的是NodeList对象。
 
 Q； 什么是property？(引用小册)
 
-A: 
+A:
 
 property:
 dom是一个对象。通过getxxxxbyxxx方法获取到对象以后，可以通过js修改一些属性，这些属性就是property。property是JS范畴的属性，符合JS的标准
@@ -582,7 +708,7 @@ console.log(p.style.width)  // 获取样式
 
 Q: 什么是attribute?（引用小册）
 
-A: 
+A:
 
 attribute:
 
@@ -622,7 +748,7 @@ div.appendChild(span2)
 
 Q: 删除节点
 
-A: 
+A:
 ```
 const ele = document.getElementById('title')
 const child = ele.childNodes
@@ -631,7 +757,7 @@ ele.removeChild(child[0])
 
 Q: 获取子元素列表
 
-A: 
+A:
 ```
 const ele = document.getElementById('title')
 const child = ele.childNodes
@@ -655,7 +781,7 @@ Q: 优化Dom性能（引用）
 
 Q: 怎样获得用户用的哪个浏览器
 
-A: 
+A:
 
 ```
 const uaInfo = navigator.userAgent
@@ -673,11 +799,11 @@ const screenHeight = screen.height
 
 Q: location
 
-A: 
+A:
 
 Q: 怎样让浏览器前进和后退
 
-A: 
+A:
 ```
 history.back()
 history.forward()
@@ -709,7 +835,7 @@ div.appendChild(fragment)
 * 事件代理
 
 Q: 如何进行事件绑定？
-A: 
+A:
 ```
 const btn = document.getElementById('button')
 btn.addEventListener('click', event => {
@@ -728,7 +854,7 @@ A:
 
 Q: 怎样阻止默认操作？
 
-A: 
+A:
 阻止默认事件，例如阻止a的跳转
 
 ```
@@ -745,7 +871,7 @@ e.stopPropagation() // 阻止事件冒泡
 
 Q: 什么是事件代理？
 
-A: 
+A:
 事件代理，就是当不好确定事件绑定在哪里的时候，
 可以统一绑定在父元素上
 然后父元素上要加一些判断和操作，
@@ -758,7 +884,7 @@ A:
 ### 题目
 Q: 编写一个通用的事件监听函数
 
-A: 
+A:
 ```
 function bindEvent(ele, type, selector, fn) {
     // 如果是有三个参数的话，第三个参数就为fn
@@ -788,7 +914,7 @@ A:
 
 * 使用事件代理
 * 通过e.target获取触发元素
-* 用matches来判断是否触发元素    
+* 用matches来判断是否触发元素
 ## ajax
 ### 知识点
 * XMLHttpRequest
@@ -838,7 +964,7 @@ xhr.send(JSON.stringify(postData))
 
 Q: xhr.readyState有哪些状态？
 
-A: 
+A:
 
 | 值 | 状态 | 描述 |
 | --- | --- | --- |
@@ -875,7 +1001,7 @@ ajax请求时，浏览器要求当前网页和server必须同源。
 
 Q: 有哪些标签可以无视同源策略? 有什么作用
 
-A: 
+A:
 
 注意:
 加载图片,css,js可无视同源策略
@@ -943,6 +1069,6 @@ cors
 
 Q: 简单实现一个Jsonp （TODO：看 面试之道小册）
 
-A: 
+A:
 
 ## 存储
