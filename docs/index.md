@@ -1,6 +1,7 @@
 ---
 sidebar: auto
 ---
+# 前端基础知识艾宾浩斯记忆（完全版）
 # 前端基础知识艾宾浩斯记忆（anki）
 ## chapter01 变量类型和计算
 ### 知识点
@@ -41,11 +42,11 @@ A:
 
 值类型是存在`栈内存`中的。可以想象下图所示。值类型是不可改变的。也就是复制给一个新的变量的话，新变量改变，老的变量不会改变。
 
-![-w532](media/16185405222345/16185414439608.jpg)
+![-w532](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/04/16/16185414439608.jpg)
 
 
 引用类型存在`堆栈内存`中的。可以想象下图所示，有点相当于地址簿，栈中存储的只是一个内存的地址，真正的数据存在这个内存地址中。引用类型是可以改变的。也就是复制给一个新的变量的话，新变量改变，老的变量也会改变。
-![-w537](media/16185405222345/16185414566333.jpg)
+![-w537](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/04/16/16185414566333.jpg)
 
 
 
@@ -247,7 +248,7 @@ A:
 
 闭包在代码解析时就能确定。
 
-![-w453](media/16185405222345/16185414927693.jpg)
+![-w453](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/04/16/16185414927693.jpg)
 
 
 Q: 闭包的两种情况
@@ -704,7 +705,7 @@ A:
 7. 五秒之后，定时器将cb1推到回调函数队列中
 8. 事件循环将cb1放入调用栈
 
-![-w994](media/16185405222345/16185407397870.jpg)
+![-w994](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/04/16/16185407397870.jpg)
 
 
 Q: async/await 的基本用法?
@@ -841,10 +842,10 @@ A: 1,2
 Q: promise题分析的一些注意点
 A: 
 await 后面记得也是微任务
-![](media/16185405222345/16186449998022.jpg)
+![](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/08/16/16186449998022.jpg)
 
 初始化promise是，函数会立即执行
-![](media/16185405222345/16186450997532.jpg)
+![](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/08/16/16186450997532.jpg)
 
 
 ## chapter05 JS-Web-API
@@ -1246,10 +1247,11 @@ A：
 Restful API 是一种新的API设计方法
 * 传统API把每个url当做一个功能
 * Restful API，把url当做唯一的资源，用不同的请求方法表示不同的含义
-*![-w1061](media/16185405222345/16187545994946.jpg)
-![-w1136](media/16185405222345/16187546318661.jpg)
+*![-w1061](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/08/16/16187545994946.jpg)
+![-w1136](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/08/16/16187546318661.jpg)
 * delete表示删除 
 Q: http 有哪些headers?
+
 A: 
 request Headers
 Accept 浏览器可接受的数据格式
@@ -1268,6 +1270,7 @@ Content-Encoding: 返回数据的压缩算法，如gzip
 Set-Cookie: 服务端需要通过该字段来修改浏览器中的cookie
 
 Q: 为什么需要HTTP缓存？
+
 A: 
 ①　缓存是什么?
 保存资源副本并在下次请求时直接使用该副本的技术。当Web缓存发现请求的资源已经被存储，它会拦截请求，返回该资源的拷贝，而不会去源服务器重新下载。
@@ -1280,6 +1283,7 @@ A:
 因为静态资源加上hash名打包后是不会修改的
 
 Q: 什么是强制缓存？
+
 A:
 服务器觉得资源可以被缓存才会加Cache-Control
 (1) Cache-Control 
@@ -1290,16 +1294,17 @@ no-cache : 不使用强制缓存,由服务端决定do what
 no-store : 不使用强制缓存,服务端也不缓存,直接由服务端返回新资源
 private : 只允许最终用户缓存
 pubilc : 用户和中间的代理都能缓存资源
-![-w805](media/16185405222345/16187553136578.jpg)
-![-w943](media/16185405222345/16187553286229.jpg)
+![-w805](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/08/16/16187553136578.jpg)
+![-w943](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/08/16/16187553286229.jpg)
 
 Q: 什么是协商缓存？
+
 A:
-![-w811](media/16185405222345/16187553725858.jpg)
-![-w792](media/16185405222345/16187553878050.jpg)
-![-w966](media/16185405222345/16187554064070.jpg)
-![-w858](media/16185405222345/16187554213995.jpg)
-![-w757](media/16185405222345/16187554478877.jpg)
+![-w811](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/08/16/16187553725858.jpg)
+![-w792](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/08/16/16187553878050.jpg)
+![-w966](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/08/16/16187554064070.jpg)
+![-w858](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/08/16/16187554213995.jpg)
+![-w757](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/08/16/16187554478877.jpg)
 
 
 
@@ -1345,13 +1350,18 @@ A:
 ## vue
 
 Q: watch 和 computed 和 methods 区别是什么？
+
 A: 
 a.computed 和 methods 相比，最大区别是 computed 有缓存：如果 computed 属性依赖的属性没有变化，那么 computed 属性就不会重新计算。methods 则是看到一次计算一次。
 b.watch 和 computed 相比，computed 是计算出一个属性（废话），而 watch 则可能是做别的事情（如上报数据） 
+
 Q: v-show与v-if区别是什么
+
 A: 
 v-if 是动态添加，当值为false 时，是完全移除该元素，即dom 树中不存在该元素。 v-show 仅是隐藏/ 显示，值为false 时，该元素依旧存在于dom 树中。 若其原有样式设置了display: none 则会导致其无法正常显示。
+
 Q: 列表遍历时key有什么用
+
 A:
 我的理解就是，使用key的话，等于给元素加了另一个唯一的标识，相当于增加了一个维度。这样，虚拟DOM在做diff的时候就能更快速的比较出哪里做了改变，用最短的路径，来改变元素的排列。
 下面是答案：
@@ -1359,6 +1369,7 @@ key的特殊attribute主要用在Vue的虚拟DOM算法，在新旧nodes对比时
 有相同父元素的子元素必须有独特的key。重复的key会造成渲染错误。
 
 Q: Vue 有哪些生命周期钩子函数？分别有什么用？
+
 A: 
 创建-> 挂载-> 更新-> 销毁
  • beforeCreate在实例初始化之后，数据观测(data observer)和event/watcher事件配置之前被调用。
@@ -1369,9 +1380,10 @@ A:
  • updated由于数据更改导致的虚拟DOM重新渲染和打补丁，在这之后会调用该钩子。
  • beforeDestroy实例销毁之前调用。在这一步，实例仍然完全可用。
  • destroyed实例销毁后调用。该钩子被调用后，对应Vue实例的所有指令都被解绑，所有的事件监听器被移除，所有的子实例也都被销毁。
- ![-w600](media/16185405222345/16187958864113.jpg)
+ ![-w600](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/08/16/16187958864113.jpg)
 
 Q: vue如何实现组件间通信
+
 A: 
 * 父子组件：使用 v-on 通过事件通信
 * 爷孙组件：使用两次 v-on 通过爷爷爸爸通信，爸爸儿子通信实现爷孙通信
@@ -1379,10 +1391,12 @@ A:
 * 任意组件：使用 Vuex 通信
 
 Q: data为什么是函数？
+
 A: 
 组件要复用，每个组件使用的数据要隔离。用函数返回数据则保证每个组件使用的数据都是新的。
 
 Q: Vue数据响应式怎么做到的？
+
 A: 
 Vue的响应式是通过Object.defineProperty对数据进行劫持，并结合观察者模式实现。
 Vue利用Object.defineProperty创建一个observer来劫持监听所有的属性，把这些属性全部转为getter和setterₒ Vue中每
@@ -1392,6 +1406,7 @@ Vue不能检测到对象属性的添加或删除，解决方法是手动调用Vu
 
 
 Q: Vuex怎么用的?
+
 A: Vuex是一个声为Vue.js应用程序开发的状态管理器
 State ：全局数据
 Getter：由State的变化派生的数据
@@ -1400,6 +1415,7 @@ Action： Action提交的是mutation,而不是直接变更状态。可以包含�
 Module：将整个状态管理划分更细的粒度。
 
 Q: VueRouter你怎么用的？
+
 A: 
 Vue Router是Vue.js官方的路由管理器。用在单页应用里。
 原理：
@@ -1415,8 +1431,9 @@ this.$route.params
 ## React
 // TODO 其实这里可以用自己的话再写一遍，这样就是一篇文章
 Q: React的生命周期
+
 A: 
-![-w652](media/16185405222345/16188014154077.jpg)
+![-w652](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/08/16/16188014154077.jpg)
 Mounting：已插入真实 DOM
 * componentWillMount 在渲染前调用,在客户端也在服务端。
 
@@ -1479,14 +1496,20 @@ Q: 必考：虚拟 DOM 是什么？
 A:    
     1. 要点：虚拟 DOM 就是用来模拟 DOM 的一个对象，这个对象拥有一些重要属性，并且更新 UI 主要就是通过对比（DIFF）旧的虚拟 DOM 树 和新的虚拟 DOM 树的区别完成的。
     2. 参考：http://www.alloyteam.com/2015/10/react-virtual-analysis-of-the-dom/
+    
 Q: 必考：什么是高阶组件？
+
 A:    
     1. 要点：文档原话——高阶组件就是一个函数，且该函数接受一个组件作为参数，并返回一个新的组件。
     2. 举例：React-Redux 里 connect 就是一个高阶组件，比如 connect(mapState)(MyComponent) 接受组件 MyComponent，返回一个具有状态的新 MyComponent 组件。
+
 Q: React diff 的原理是什么？
+
 A:  
  看你记忆力了：https://imweb.io/topic/579e33d693d9938132cc8d94
+
 Q: 必考 Redux 是什么？
+
 A:    
     1. 背下文档第一句：Redux 是 JavaScript 状态容器，提供可预测化的状态管理。重点是『状态管理』。
     2. 说出核心概念的名字和作用：Action/Reducer/Store/单向数据流
@@ -1505,7 +1528,7 @@ Redux 是一个 **数据管理中心**，可以把它理解为一个全局的 da
 
 - 大致的数据结构如下所示:
 
-![](media/16185405222345/16188255597619.jpg)
+![](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/08/16/16188255597619.jpg)
 
 
 
@@ -1571,12 +1594,14 @@ Redux 是一个 **数据管理中心**，可以把它理解为一个全局的 da
 	> 3. 最好设置 **初始值**，便于应用的初始化及数据稳定；
 	
 Q: connect 的原理是什么？
+
 A:  
  react-redux 库提供的一个 API，connect 的作用是让你把组件和store连接起来，产生一个新的组件（connect 是高阶组件）
  参考：https://segmentfault.com/a/1190000017064759
  
 ## webpack 相关
 Q: webpack的一些关键概念：
+
 A: 
 JavaScript 的 模块打包工具 (module bundler)。通过分析模块之间的依赖，最终将所有模块打包成一份或者多份代码包 (bundler)，供 HTML 直接引用。实质上，Webpack 仅仅提供了 打包功能 和一套 文件处理机制，然后通过生态中的各种 Loader 和 Plugin 对代码进行预编译和打包。因此 Webpack 具有高度的可拓展性，能更好的发挥社区生态的力量。
 
@@ -1588,6 +1613,7 @@ Loader: 模块加载器，进行各种文件类型的加载与转换；
 Plugin: 拓展插件，可以通过 Webpack 相应的事件钩子，介入到打包过程中的任意环节，从而对代码按需修改；
 
 Q: 有哪些常见的Loader？他们是解决什么问题的？
+
 A: 
 file-loader：把文件输出到一个文件夹中，在代码中通过相对 URL 去引用输出的文件
 url-loader：和 file-loader 类似，但是能在文件很小的情况下以 base64 的方式把文件内容注入到代码中去
@@ -1598,6 +1624,7 @@ css-loader：加载 CSS，支持模块化、压缩、文件导入等特性
 style-loader：把 CSS 代码注入到 JavaScript 中，通过 DOM 操作去加载 CSS。
 
 Q: 有哪些常见的Plugin？他们是解决什么问题的？
+
 A: 
 HtmlWebpackPlugin: 用于创建最终使用的HTML文件。可自动生成，也可以使用模版创建。
 UglifyjsWebpackPlugin: 用于压缩js文件
@@ -1605,6 +1632,7 @@ TerserWebpackPlugin：用于压缩js，更新，支持es6语法
 ExtractTextWebpackPlugin: 将所有的入口 chunk中引用的 *.css，移动到独立分离的 CSS 文件
 
 Q: Loader 和 Plugin 有什么差别
+
 A: 
 Loader直译为"加载器"。Webpack将一切文件视为模块，Loader让Webpack拥有了加载和解析非JavaScript文件的能力。
 Plugin直译为"插件"。Plugin可以扩展Webpack的功能。 在 Webpack 运行的生命周期中会广播出许多事件，Plugin 可以监听这些事件，在合适的时机通过 Webpack 提供的 API 改变输出结果。
