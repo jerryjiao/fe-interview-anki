@@ -709,6 +709,7 @@ A:
 
 
 Q: async/await 的基本用法?
+
 A: 
 1. async/await消灭了异步回调，和Promise相辅相成。
 2. 执行async 函数，返回的是Promise对象
@@ -716,6 +717,7 @@ A:
 4. try...catch 可以捕获异常，代替了Promise 的 catch
 
 Q: 宏任务与微任务的区别？ 宏任务与微任务有哪些？
+
 A: 
 
 微任务： 其实是es规定的，就是其实是js代码中的一些异步方法（promise）
@@ -724,12 +726,14 @@ A:
 因为微任务是在DOM渲染之前执行的，而宏任务是在DOM渲染之后执行的，所以先执行微任务再执行宏任务。
 
 Q: 宏任务，微任务题的解题思路
+
 A: 
 1. 先执行同步代码
 2. 再执行微任务代码(await 后面为微任务)
 3. 再执行宏任务代码
 
 Q: 代码的执行步骤
+
 A: 
 1. 同步代码
 2. 执行微任务
@@ -811,6 +815,7 @@ Promise.resolve().then(() => {
     console.log(3)
 })
 ```
+
 A: 1,3
 
 Q: 以下代码的执行结果
@@ -824,6 +829,7 @@ Promise.resolve().then(() => { // 返回 rejected 状态的 promise
     console.log(3)
 })
 ```
+
 A: 1,2,3
 
 Q: 以下代码的执行结果
@@ -837,9 +843,11 @@ Promise.resolve().then(() => { // 返回 rejected 状态的 promise
     console.log(3)
 })
 ```
+
 A: 1,2
 
 Q: promise题分析的一些注意点
+
 A: 
 await 后面记得也是微任务
 ![](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/08/16/16186449998022.jpg)
@@ -1039,6 +1047,7 @@ div.appendChild(fragment)
 * 事件代理
 
 Q: 如何进行事件绑定？
+
 A:
 ```
 const btn = document.getElementById('button')
@@ -1472,6 +1481,7 @@ setState函数的第二个参数允许传入回调函数，在状态更新完毕
 ```
 
 Q: 受控组件与非受控组件是什么
+
 A:
 ```
 <FInput value={x} onChange={fn}/> 受控组件
@@ -1480,19 +1490,24 @@ A:
 区别受控组件的状态由开发者维护，非受控组件的状态由组件自身维护（不受开发者控制）,用ref获取组件的值
 
 Q: shouldComponentUpdate有什么用?
+
 A:
 用于在没有必要更新 UI 的时候返回 false，以提高渲染性能
 
 Q: 必考：React 如何实现组件间通信？
+
 A:   
     1. 父子靠 props 传函数
     2. 爷孙可以穿两次 props
     3. 任意组件用 Redux（也可以自己写一个 eventBus）
 Q: 必考：shouldComponentUpdate 有什么用？
+
 A:    
     1. 要点：用于在没有必要更新 UI 的时候返回 false，以提高渲染性能
     2. 参考：harettp://taobaofed.org/blog/2016/08/12/optimized-react-components/
+    
 Q: 必考：虚拟 DOM 是什么？
+
 A:    
     1. 要点：虚拟 DOM 就是用来模拟 DOM 的一个对象，这个对象拥有一些重要属性，并且更新 UI 主要就是通过对比（DIFF）旧的虚拟 DOM 树 和新的虚拟 DOM 树的区别完成的。
     2. 参考：http://www.alloyteam.com/2015/10/react-virtual-analysis-of-the-dom/
@@ -1638,6 +1653,7 @@ Loader直译为"加载器"。Webpack将一切文件视为模块，Loader让Webpa
 Plugin直译为"插件"。Plugin可以扩展Webpack的功能。 在 Webpack 运行的生命周期中会广播出许多事件，Plugin 可以监听这些事件，在合适的时机通过 Webpack 提供的 API 改变输出结果。
 
 Q: 如何提高Webpack的构建速度
+
 A: 
 优化 loader 配置，配置test 、 include 、 exclude
 terser-webpack-plugin，开启缓存和多进程压缩
