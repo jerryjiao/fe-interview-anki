@@ -4,6 +4,7 @@ module.exports = {
   themeConfig: {
     nav: [
       { text: 'Home', link: '/index' },
+      { text: '手写代码', link: '/writing'},
       { text: '附加内容', link: '/config' }
     ]
   },
