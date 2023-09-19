@@ -6,6 +6,8 @@
     "build": "vitepress build docs && mv docs/.vitepress/dist public"
   },
   "devDependencies": {
-    "vitepress": "^1.0.0-rc.14"
+    "mermaid": "^10.4.0",
+    "vitepress": "^1.0.0-rc.14",
+    "vitepress-plugin-mermaid": "^2.0.14"
   }
 }
