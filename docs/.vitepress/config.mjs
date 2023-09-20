@@ -17,6 +17,7 @@ export default defineConfig({
     sidebar: [
       {
         items: [
+          { text: 'html', link: '/html' },
           { text: 'javascript基础知识', link: '/js' },
           { text: 'Dom和Bom', link: '/domandbom'},
           { text: '浏览器', link: '/browser' },
