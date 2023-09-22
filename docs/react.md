@@ -1,176 +1,312 @@
 # React
-Q: React的生命周期
+## 虚拟DOM的原理是什么？
 
-A: 
-![-w652](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/08/16/16188014154077.jpg)
-Mounting：已插入真实 DOM
-* componentWillMount 在渲染前调用,在客户端也在服务端。
+### 答题思路
 
-* componentDidMount : 在第一次渲染后调用，只在客户端。之后组件已经生成了对应的DOM结构，可以通过this.getDOMNode()来进行访问。 如果你想和其他JavaScript框架一起使用，可以在这个方法中调用setTimeout, setInterval或者发送AJAX请求等操作(防止异步操作阻塞UI)。
-Updating：正在被重新渲染
-* shouldComponentUpdate 返回一个布尔值。在组件接收到新的props或者state时被调用。在初始化时或者使用forceUpdate时不被调用。
-可以在你确认不需要更新组件时使用。
+这是一个关于虚拟DOM（Virtual DOM）原理的问题，需要对虚拟DOM的概念、作用、工作原理进行详细的解释。在回答这个问题时，你需要详细地阐述虚拟DOM的创建过程、Diff算法的工作方式，以及如何将虚拟DOM更新到真实DOM的步骤。
 
-* componentWillUpdate在组件接收到新的props或者state但还没有render时被调用。在初始化时不会被调用。
+### 答题关键点
 
-* componentDidUpdate 在组件完成更新后立即调用。在初始化时不会被调用。
-Unmounting：已移出真实 DOM
-* componentWillUnmount在组件从 DOM 中移除之前立刻被调用。
+1. **虚拟DOM的概念和作用**：虚拟DOM是真实DOM在内存中的表示，它通过JavaScript对象来描述真实DOM的结构、属性和内容。虚拟DOM的主要作用是提高DOM操作的效率，避免直接操作DOM带来的性能消耗。
+2. **虚拟DOM的创建**：当我们编写JSX或模板代码时，编译工具会将其转换为虚拟DOM的创建代码。
+3. **Diff算法**：当数据变化导致视图需要更新时，会创建一个新的虚拟DOM树。然后，通过Diff算法比较新旧虚拟DOM树的差异。
+4. **更新真实DOM**：根据Diff算法计算出的差异，生成一个"补丁"（patch），将这个补丁应用到真实DOM上，从而完成视图的更新。
 
-Q: 为什么setSate有异步更新
-A: 
-React在执行setState之后，要执行render、diff、更新DOM等一系列操作，性能开销是比较大的。加入异步更新、更新合并等策略能优化性能。
+### 答案示例
 
-组件里等事件处理程序，如 onClick={this.handleClick} 里面等setState是异步更新。声明生命周期函数里等setState也是异步更新。如果需要多次更新需要用异步设置等语法，如
+虚拟DOM（Virtual DOM）是一个在内存中的轻量级JavaScript对象，它是真实DOM的抽象。虚拟DOM的主要作用是提高DOM操作的效率，避免直接操作DOM带来的性能消耗。
+
+详细的工作流程如下：
+
+1. **生成虚拟DOM**：当我们编写JSX或模板代码时，编译工具（如Babel）会将其转换为虚拟DOM的创建代码。这段代码会创建一个JavaScript对象，这个对象通过属性和子元素来描述DOM的结构、属性和内容。例如，一个如`<div id="app">Hello, world!</div>`的DOM元素，可能被表示为：
+    
+    ```jsx
+    {
+      type: 'div',
+      props: { id: 'app' },
+      children: ['Hello, world!']
+    }
+    
+    ```
+    
+2. **Diff算法**：当组件的状态变化时，会创建一个新的虚拟DOM树。然后，新的虚拟DOM树和旧的虚拟DOM树会被传递给Diff算法。Diff算法会通过深度优先搜索，比较新旧虚拟DOM树的差异。在比较过程中，只会比较同一层级的节点，这样可以降低比较的复杂性，提高比较的效率。
+3. **更新真实DOM**：Diff算法会根据比较的结果，生成一个"补丁"（patch）。这个补丁描述了如何修改真实的DOM，使其与新的虚拟DOM树保持一致。然后，这个补丁会被应用到真实的DOM上，从而完成视图的更新。
+
+通过这种方式，虚拟DOM可以有效地减少不必要的DOM操作，提高视图更新的效率。
+
+### 关键点脑图
+
+```markdown
+- 虚拟DOM原理
+  - 虚拟DOM的概念和作用
+    - 使用JavaScript对象描述真实DOM的结构、属性和内容
+    - 提高DOM操作的效率，避免直接操作DOM带来的性能消耗
+  - 生成虚拟DOM
+    - 编译JSX或模板代码为虚拟DOM的创建代码
+  - Diff算法
+    - 深度优先搜索比较新旧虚拟DOM树的差异
+  - 更新真实DOM
+    - 根据Diff算法生成的补丁，更新真实DOM
+
 ```
-this.setState((state, props) => {
-  return {count: state.count + props.count }
-})
-```
-其他地方，如setTimeout里，对原生绑定如 addEventListener 里，都是同步更新。
+## React或Vue的DOM diff算法是怎么样的？
 
-setState函数的第二个参数允许传入回调函数，在状态更新完毕后进行调用，譬如：
+### 答题思路
+
+这是一个关于React和Vue框架中DOM diff算法的问题，主要是对DOM diff算法的理解和它在React和Vue中的应用。在回答这个问题时，你需要详细地解释DOM diff算法的基本概念，以及它在React和Vue中的工作原理。
+
+### 答题关键点
+
+1. **DOM diff算法**：DOM diff算法是用来比较新旧两个虚拟DOM树的差异的算法，它可以高效地找出两个虚拟DOM树的最小差异。
+2. **React和Vue中的DOM diff算法**：React和Vue都使用了高效的DOM diff算法来提高视图更新的性能，但具体的实现细节有所不同。
+
+### 答案示例
+
+DOM diff算法是用来比较新旧两个虚拟DOM树的差异的算法，它可以高效地找出两个虚拟DOM树的最小差异，并生成一个“补丁”（patch），用来更新真实的DOM。
+
+React和Vue都使用了高效的DOM diff算法来提高视图更新的性能，但具体的实现细节有所不同。
+
+1. **React的DOM diff算法**：React通过分层比较来提高diff的性能。React只会比较同一层级的节点，跨层级的节点不会进行比较。如果一个组件的位置发生了变化，即使是同一类型的组件，React也会销毁旧组件，创建新组件。此外，React还提供了key属性，通过key属性可以帮助React识别哪些子元素在不同的渲染中保持稳定。
+2. **Vue的DOM diff算法**：Vue的diff算法也只会进行同层级的比较，但Vue在处理列表的时候使用了一种基于两端比较的优化策略，能更高效地找出需要更新的节点。Vue也使用了key属性来识别节点，提高diff的效率。
+
+通过使用DOM diff算法，React和Vue可以只更新需要更新的部分，而不需要重新渲染整个视图，从而大大提高了视图更新的性能。
+
+### 关键点脑图
+
+```markdown
+- DOM diff算法
+  - 基本概念
+    - 比较新旧两个虚拟DOM树的差异
+  - React的DOM diff算法
+    - 分层比较，只比较同一层级的节点
+    - 提供key属性，帮助识别稳定的子元素
+  - Vue的DOM diff算法
+    - 分层比较，只比较同一层级的节点
+    - 使用两端比较的优化策略处理列表
+    - 提供key属性，帮助识别稳定的子元素
+
 ```
-    this.setState({
-      load: !this.state.load,
-      count: this.state.count + 1
-    }, () => {
-      console.log(this.state.count);
-      console.log('加载完成')
+## React有哪些生命周期钩子函数？数据请求放在哪个钩子里？
+
+### 答题思路
+
+这是一个关于React组件生命周期钩子函数的问题，主要是对React组件生命周期的理解。在回答这个问题时，你需要详细地列出React组件的生命周期钩子函数，并解释数据请求应该放在哪个钩子函数中。
+
+### 答题关键点
+
+1. **React生命周期钩子函数**：React组件的生命周期可以分为三个阶段：挂载阶段（Mounting）、更新阶段（Updating）和卸载阶段（Unmounting）。每个阶段都有对应的生命周期钩子函数。
+2. **数据请求放在哪个钩子函数中**：数据请求通常放在挂载阶段的`componentDidMount`钩子函数中。
+
+### 答案示例
+
+React组件的生命周期可以分为三个阶段：挂载阶段（Mounting）、更新阶段（Updating）和卸载阶段（Unmounting）。每个阶段都有对应的生命周期钩子函数。
+
+1. **挂载阶段（Mounting）**：这是组件实例被创建和插入DOM的阶段，对应的生命周期钩子函数有`constructor`、`static getDerivedStateFromProps`、`render`和`componentDidMount`。
+2. **更新阶段（Updating）**：这是组件的props或state发生变化，导致组件重新渲染的阶段，对应的生命周期钩子函数有`static getDerivedStateFromProps`、`shouldComponentUpdate`、`render`、`getSnapshotBeforeUpdate`和`componentDidUpdate`。
+3. **卸载阶段（Unmounting）**：这是组件被从DOM中移除的阶段，对应的生命周期钩子函数是`componentWillUnmount`。
+
+数据请求通常放在`componentDidMount`钩子函数中。因为在这个阶段，组件已经被插入到DOM中，我们可以确保数据请求不会阻塞页面的初次渲染，同时，当数据请求完成并调用`setState`更新组件状态时，页面可以正确地重新渲染。
+
+### 关键点脑图
+
+```markdown
+- React生命周期钩子函数
+  - 挂载阶段（Mounting）
+    - constructor
+    - static getDerivedStateFromProps
+    - render
+    - componentDidMount
+  - 更新阶段（Updating）
+    - static getDerivedStateFromProps
+    - shouldComponentUpdate
+    - render
+    - getSnapshotBeforeUpdate
+    - componentDidUpdate
+  - 卸载阶段（Unmounting）
+    - componentWillUnmount
+- 数据请求放在componentDidMount钩子函数中
+
+```
+## React如何实现组件间通信
+
+### 答题思路
+
+这是一个关于React组件间通信的问题，主要是对React的props、context和事件的理解。在回答这个问题时，你需要详细地解释React中不同类型的组件间通信方式。
+
+### 答题关键点
+
+1. **父子组件间通信**：父子组件间的通信主要通过props实现。父组件可以通过props向子组件传递数据，子组件可以通过props向父组件传递数据。
+2. **跨层级组件间通信**：跨层级的组件间通信可以通过context实现。Context提供了一种方式可以让数据在组件树中传递而不必一级一级地手动传递。
+3. **兄弟组件间通信**：兄弟组件间的通信可以通过共同的父组件来中转，或者使用事件、状态管理库等方式。
+
+### 答案示例
+
+React中的组件间通信主要有以下几种方式：
+
+1. **父子组件间通信**：父子组件间的通信主要通过props实现。父组件可以通过props向子组件传递数据，子组件可以通过props向父组件传递数据。如果子组件需要向父组件通信，父组件可以将一个回调函数作为prop传给子组件，子组件可以通过调用这个函数来传递数据。
+2. **跨层级组件间通信**：跨层级的组件间通信可以通过context实现。Context提供了一种方式可以让数据在组件树中传递而不必一级一级地手动传递。Context设计目标是为了共享那些对于一个组件树而言是“全局”的数据，如当前认证的用户、主题或首选语言。
+3. **兄弟组件间通信**：兄弟组件间的通信可以通过共同的父组件来中转，父组件可以作为“中央事件总线”，接收和发送数据。此外，也可以使用事件或者状态管理库（如Redux、MobX等）来实现兄弟组件间的通信。
+
+### 关键点脑图
+
+```markdown
+- React组件间通信
+  - 父子组件间通信
+    - 父组件通过props向子组件传递数据
+    - 父组件将回调函数作为prop传给子组件，子组件通过调用这个函数传递数据
+  - 跨层级组件间通信
+    - 使用context传递数据
+  - 兄弟组件间通信
+    - 通过共同的父组件中转
+    - 使用事件或状态管理库（如Redux、MobX等）
+
+```
+## 你如何理解Redux?
+
+### 答题思路
+
+这个问题要求解释Redux的概念和工作原理。Redux是JavaScript应用中用于管理状态的开源库，它提供了一种可预测的状态管理方式。在回答这个问题时，我们需要详细地解释Redux的核心概念（store、action和reducer）以及它的工作原理。
+
+### 答题关键点
+
+1. **Redux的基本概念**：Redux是一个用于JavaScript应用的预测性状态容器。它通过维护一个全局的应用状态对象，来帮助开发者管理应用的状态。
+2. **Store**：Store是Redux中的核心概念，它是一个JavaScript对象，用于存储整个应用的状态。Store有三个主要的功能：存储应用状态，允许通过dispatch方法更新状态，以及注册和注销监听器。
+3. **Action**：Action是描述应用状态变化的普通JavaScript对象。它是改变应用状态的唯一途径。每个action都有一个type属性，用于描述状态变化的类型，以及一些其他的属性，用于描述状态变化的具体内容。
+4. **Reducer**：Reducer是一个纯函数，用于根据action来更新state。它接收当前的state和一个action，然后返回新的state。
+
+### 答案示例
+
+Redux是一个用于JavaScript应用的预测性状态容器，它通过维护一个全局的应用状态对象，来帮助开发者管理应用的状态。Redux的工作原理主要包含三个核心概念：Store、Action和Reducer。
+
+1. **Store**：Store是Redux中的核心概念，它是一个JavaScript对象，用于存储整个应用的状态。Store有三个主要的功能：存储应用状态，允许通过dispatch方法更新状态，以及注册和注销监听器。在Redux中，只有一个单一的store，所有的状态都存储在这个store中。
+2. **Action**：Action是描述应用状态变化的普通JavaScript对象。在Redux中，任何状态的变化都需要通过dispatch一个action来完成。每个action都有一个type属性，用于描述状态变化的类型，以及一些其他的属性，用于描述状态变化的具体内容。
+3. **Reducer**：Reducer是一个纯函数，用于根据action来更新state。它接收当前的state和一个action，然后返回新的state。在Redux中，所有的状态变化都需要通过reducer来完成。当我们dispatch一个action时，Redux会调用我们的reducer，将当前的state和action作为参数传入，然后由reducer计算出新的state。
+
+在实际的应用中，我们通常会根据不同的功能模块来编写多个reducer，然后使用Redux提供的combineReducers方法来将它们合并成一个大的reducer。
+
+这就是Redux的基本概念和工作原理。通过这种方式，Redux提供了一种可预测的状态管理方法，让状态的更新变得更加可控和可预测。
+
+### 关键点脑图
+
+```markdown
+- Redux理解
+  - 基本概念
+    - 预测性状态容器，用于管理全局应用状态
+  - Store
+    - 存储应用状态，允许通过dispatch方法更新状态，注册和注销监听器
+  - Action
+    - 描述应用状态变化的普通JavaScript对象，包含type属性和其他描述状态变化的属性
+  - Reducer
+    - 纯函数，用于根据action更新state，接收当前的state和一个action，返回新的state
+
+```
+## 什么是高阶组件HOC?
+
+### 答题思路
+
+这是一个关于React中高阶组件（Higher-Order Component，HOC）的问题，主要是对HOC的理解。在回答这个问题时，你需要详细地解释HOC的基本概念，以及它在React中的用途和使用方式。
+
+### 答题关键点
+
+1. **高阶组件的概念**：高阶组件是一个函数，接收一个组件并返回一个新的组件。高阶组件的主要作用是复用组件逻辑。
+2. **高阶组件的使用**：高阶组件可以用于处理很多常见的React组件逻辑，如状态管理、props操作等。
+
+### 答案示例
+
+高阶组件（Higher-Order Component，HOC）是React中用于复用组件逻辑的一种高级技术。高阶组件本身不是React API的一部分，它是一种基于React的组合特性而形成的设计模式。
+
+HOC是一个函数，它接收一个组件并返回一个新的组件。在这个过程中，HOC可以对输入的组件进行操作，添加或修改props，处理状态，以及访问React API，然后返回增强后的新组件。
+
+```jsx
+function withHOC(WrappedComponent) {
+  // ...创建并返回一个新的组件...
+  return class extends React.Component {
+    render() {
+      return <WrappedComponent {...this.props} />;
+    }
+  };
+}
+
+```
+
+高阶组件的一个典型应用是状态管理。例如，我们可以创建一个HOC，它的作用是向包装的组件提供一个状态和修改这个状态的方法。这样，我们就可以把状态管理的逻辑抽象出来，复用在多个组件中。
+
+总的来说，高阶组件提供了一种有效的方式来复用组件逻辑，使我们的组件更加干净，更加易于理解和维护。
+
+### 关键点脑图
+
+```markdown
+- 高阶组件（HOC）
+  - 基本概念
+    - 是一个函数，接收一个组件并返回一个新的组件
+    - 主要用于复用组件逻辑
+  - 使用
+    - 可以处理很多常见的React组件逻辑，如状态管理、props操作等
+
+```
+## React Hooks如何模拟组件生命周期？
+
+### 答题思路
+
+这是一个关于React Hooks模拟组件生命周期的问题，主要是对React Hooks的理解，尤其是`useEffect`这个hook。在回答这个问题时，你需要详细地解释`useEffect`的使用方式，以及如何通过`useEffect`来模拟组件的挂载、更新和卸载阶段。
+
+### 答题关键点
+
+1. **useEffect的基本使用**：`useEffect`是React Hooks提供的一个API，它接收两个参数：一个是副作用函数，另一个是依赖数组。副作用函数会在组件渲染后执行，依赖数组用于优化副作用函数的执行。
+2. **模拟组件生命周期**：通过`useEffect`，我们可以模拟组件的挂载、更新和卸载阶段。
+
+### 答案示例
+
+在React Hooks中，我们主要通过`useEffect`这个hook来模拟组件的生命周期。`useEffect`接收两个参数：一个是副作用函数，另一个是依赖数组。
+
+1. **模拟`componentDidMount`**：如果我们想要在组件挂载后（相当于类组件的`componentDidMount`）执行一些副作用，我们可以传递一个空的依赖数组给`useEffect`。这样，副作用函数只会在组件挂载后执行一次。
+    
+    ```jsx
+    useEffect(() => {
+      console.log('Component did mount');
+    }, []);
+    
+    ```
+    
+2. **模拟`componentDidUpdate`**：如果我们想要在组件更新后（相当于类组件的`componentDidUpdate`）执行一些副作用，我们可以不传递依赖数组，或者传递包含依赖变量的数组给`useEffect`。这样，每次组件更新时，副作用函数都会执行。
+    
+    ```jsx
+    useEffect(() => {
+      console.log('Component did update');
     });
-```
-
-Q: 受控组件与非受控组件是什么
-
-A:
-```
-<FInput value={x} onChange={fn}/> 受控组件
-<FInput defaultValue={x} ref={input}/> 非受控组件
-```
-区别受控组件的状态由开发者维护，非受控组件的状态由组件自身维护（不受开发者控制）,用ref获取组件的值
-
-Q: shouldComponentUpdate有什么用?
-
-A:
-用于在没有必要更新 UI 的时候返回 false，以提高渲染性能
-
-Q: 必考：React 如何实现组件间通信？
-
-A:   
-    1. 父子靠 props 传函数
-    2. 爷孙可以穿两次 props
-    3. 任意组件用 Redux（也可以自己写一个 eventBus）
-Q: 必考：shouldComponentUpdate 有什么用？
-
-A:    
-    1. 要点：用于在没有必要更新 UI 的时候返回 false，以提高渲染性能
-    2. 参考：harettp://taobaofed.org/blog/2016/08/12/optimized-react-components/
+    // 或者
+    useEffect(() => {
+      console.log('Component did update');
+    }, [dependency]);
     
-Q: 必考：虚拟 DOM 是什么？
-
-A:    
-    1. 要点：虚拟 DOM 就是用来模拟 DOM 的一个对象，这个对象拥有一些重要属性，并且更新 UI 主要就是通过对比（DIFF）旧的虚拟 DOM 树 和新的虚拟 DOM 树的区别完成的。
-    2. 参考：http://www.alloyteam.com/2015/10/react-virtual-analysis-of-the-dom/
+    ```
     
-Q: 必考：什么是高阶组件？
+3. **模拟`componentWillUnmount`**：如果我们想要在组件卸载前（相当于类组件的`componentWillUnmount`）执行一些副作用，我们可以在副作用函数中返回一个函数。这个函数会在组件卸载前执行。
+    
+    ```jsx
+    useEffect(() => {
+      console.log('Component did mount');
+      return () => {
+        console.log('Component will unmount');
+      };
+    }, []);
+    
+    ```
+    
 
-A:    
-    1. 要点：文档原话——高阶组件就是一个函数，且该函数接受一个组件作为参数，并返回一个新的组件。
-    2. 举例：React-Redux 里 connect 就是一个高阶组件，比如 connect(mapState)(MyComponent) 接受组件 MyComponent，返回一个具有状态的新 MyComponent 组件。
+通过以上的方式，我们可以使用`useEffect`来模拟类组件的生命周期。
 
-Q: React diff 的原理是什么？
+### 关键点脑图
 
-A:  
- 看你记忆力了：https://imweb.io/topic/579e33d693d9938132cc8d94
+```markdown
+- React Hooks模拟组件生命周期
+  - useEffect的基本使用
+    - 接收两个参数：副作用函数和依赖数组
+  - 模拟componentDidMount
+    - 传递空的依赖数组，副作用函数只在组件挂载后执行一次
+  - 模拟componentDidUpdate
+    - 不传递依赖数组，或传递包含依赖变量的数组，副作用函数在每次组件更新时执行
+  - 模拟componentWillUnmount
+    - 在副作用函数中返回一个函数，这个函数在组件卸载前执行
 
-Q: 必考 Redux 是什么？
-
-A:    
-    1. 背下文档第一句：Redux 是 JavaScript 状态容器，提供可预测化的状态管理。重点是『状态管理』。
-    2. 说出核心概念的名字和作用：Action/Reducer/Store/单向数据流
-    3. 说出常用 API：store.dispatch(action)/store.getState()
-
-<h3 id="5">5. Redux</h3>
-
-Redux 是一个 **数据管理中心**，可以把它理解为一个全局的 data store 实例。它通过一定的使用规则和限制，保证着数据的健壮性、可追溯和可预测性。它与 React 无关，可以独立运行于任何 JavaScript 环境中，从而也为同构应用提供了更好的数据同步通道。
-
-- **核心理念**:
-	- **单一数据源**: 整个应用只有唯一的状态树，也就是所有 state 最终维护在一个根级 Store 中；
-	- **状态只读**: 为了保证状态的可控性，最好的方式就是监控状态的变化。那这里就两个必要条件：
-		- Redux Store 中的数据无法被直接修改；
-		- 严格控制修改的执行；
-	- **纯函数**: 规定只能通过一个纯函数 (Reducer) 来描述修改；
-
-- 大致的数据结构如下所示:
-
-![](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/08/16/16188255597619.jpg)
-
-
-
-
-- **理念实现**:
-	- **Store**: 全局 Store 单例， 每个 Redux 应用下只有一个 store， 它具有以下方法供使用:
-		- `getState`: 获取 state；
-		- `dispatch`: 触发 action, 更新 state；
-		- `subscribe`: 订阅数据变更，注册监听器；
-	
-	```js
-	// 创建
-	const store = createStore(Reducer, initStore)
-	```
-	
-	- **Action**: 它作为一个行为载体，用于映射相应的 Reducer，并且它可以成为数据的载体，将数据从应用传递至 store 中，是 store **唯一的数据源**；
-
-	```js
-	// 一个普通的 Action
-   const action = {
-		type: 'ADD_LIST',
-		item: 'list-item-1',
-	}
-	
-	// 使用：
-	store.dispatch(action)
-	
-	// 通常为了便于调用，会有一个 Action 创建函数 (action creater)
-	funtion addList(item) {
-		return const action = {
-			type: 'ADD_LIST',
-			item,
-		}
-	}
-	
-	// 调用就会变成:
-	dispatch(addList('list-item-1'))
-	```
-		
-	- **Reducer**: 用于描述如何修改数据的纯函数，Action 属于行为名称，而 Reducer 便是修改行为的实质；
-
-	```js
-	// 一个常规的 Reducer
-	// @param {state}: 旧数据
-	// @param {action}: Action 对象
-	// @returns {any}: 新数据
-	const initList = []
-	function ListReducer(state = initList, action) {
-		switch (action.type) {
-			case 'ADD_LIST':
-				return state.concat([action.item])
-				break
-			defalut:
-				return state
-		}
-	}
-	```
-		
-	> **注意**:
-	>
-	> 1. 遵守数据不可变，不要去直接修改 state，而是返回出一个 **新对象**，可以使用 `assign / copy / extend / 解构` 等方式创建新对象；
-	> 2. 默认情况下需要 **返回原数据**，避免数据被清空；
-	> 3. 最好设置 **初始值**，便于应用的初始化及数据稳定；
-	
-Q: connect 的原理是什么？
-
-A:  
- react-redux 库提供的一个 API，connect 的作用是让你把组件和store连接起来，产生一个新的组件（connect 是高阶组件）
- 参考：https://segmentfault.com/a/1190000017064759
- 
+```

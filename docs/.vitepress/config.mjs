@@ -3,7 +3,7 @@ import { withMermaid } from "vitepress-plugin-mermaid";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "前端基础知识艾宾浩斯记忆（anki）",
+  title: "GPT4搞前端面试",
   description: "利用anki来学习前端基础知识",
 
   themeConfig: {
@@ -11,7 +11,6 @@ export default defineConfig({
     nav: [
       { text: '前端基础知识', link: '/js' },
       { text: '面试真题', link: '/real' },
-      { text: '手写题', link: 'write'}
     ],
 
     sidebar: [
@@ -20,6 +19,7 @@ export default defineConfig({
           { text: 'html', link: '/html' },
           { text: 'css', link: '/css'},
           { text: 'javascript基础知识', link: '/js' },
+          { text: 'javascript手写题', link: '/jswriting' },
           { text: 'Dom和Bom', link: '/domandbom' },
           { text: 'Http', link: '/http' },
           { text: '浏览器', link: '/browser' },

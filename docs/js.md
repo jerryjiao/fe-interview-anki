@@ -1,855 +1,467 @@
 # javascript基础知识
 
-## 变量类型和计算
+## JS的数据类型有哪些？
 
-### 知识点
-* 变量类型
-* 变量计算
-* truely和falsely变量
+### 答题思路
 
-#### 变量类型
+这是一道考察 JavaScript 基础知识的理论题，主要是询问 JavaScript 有哪些数据类型。在回答这个问题时，我们需要列出 JavaScript 所有的数据类型，并对每种类型进行简要的解释。
 
-Q: 基本类型有哪些
+### 答题关键点
 
-A:
+1. JavaScript 数据类型：原始类型（Primitive Type）和对象类型（Object）。
+2. 原始类型：包括 Undefined、Null、Boolean、Number、String、Symbol（ES6 新增）、BigInt（ES10 新增）。
+3. 对象类型：包括 Object、Array、Function、Date 等。
 
-* Null
-* Boolean
-* Number
-* String
-* Undefined
-* Symbol（ES6加入）
+### 答案示例
 
-Q: 引用类型有哪些？
+JavaScript 的数据类型主要可以分为两大类：原始类型（Primitive Type）和对象类型（Object）。
 
-A:
+原始类型包括：
 
-- 对象
-- 数组
-- 函数
-- Date
-- RegExp（正则）
+1. **Undefined**：只有一个值，即 `undefined`。
+2. **Null**：只有一个值，即 `null`。
+3. **Boolean**：有两个值，`true` 和 `false`。
+4. **Number**：可以是任何数值，包括正数、负数和特殊值如 `NaN`（不是一个数）、`Infinity`（无穷大）、`Infinity`（无穷小）等。
+5. **String**：表示文本数据，可以是任何长度的 Unicode 文本。
+6. **Symbol**：（ES6 新增）每个 Symbol 的值都是唯一的，用于保证对象属性的唯一性。
+7. **BigInt**：（ES10 新增）可以表示任意大的整数。
 
+对象类型主要有：
 
-Q: 原始类型与引用类型的区别
+1. **Object**：JavaScript 中的对象是键值对的集合，是一种复合类型，可以包含其他数据类型的值。
+2. **Array**：是一种特殊的对象，用于表示有序的数据集合。
+3. **Function**：函数实际上也是一种对象，它是可调用的对象。
+4. **Date**：用于处理日期和时间的内置对象。
 
-A:
+### 关键点脑图
 
-大部分语言都可以分为两种类型：
-值类型和引用类型，引用类型也是为了提升代码的执行效率
+```markdown
+- JavaScript 数据类型
+  - 原始类型
+    - Undefined
+    - Null
+    - Boolean
+    - Number
+    - String
+    - Symbol
+    - BigInt
+  - 对象类型
+    - Object
+    - Array
+    - Function
+    - Date
 
-值类型是存在`栈内存`中的。可以想象下图所示。值类型是不可改变的。也就是复制给一个新的变量的话，新变量改变，老的变量不会改变。
-
-![-w532](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/04/16/16185414439608.jpg)
-
-
-引用类型存在`堆栈内存`中的。可以想象下图所示，有点相当于地址簿，栈中存储的只是一个内存的地址，真正的数据存在这个内存地址中。引用类型是可以改变的。也就是复制给一个新的变量的话，新变量改变，老的变量也会改变。
-![-w537](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/04/16/16185414566333.jpg)
-
-
-
-Q: `typeof` 能判断哪些类型？
-
-A:
-基本类型，除了null都能准确识别，null会被识别为Object。
-引用类型，只能识别出function，其它都会被识别为Object。
-
-
-#### 变量计算
-
-Q: 如何进行字符串拼接？
-
-A:
-
-可以使用 `+` 符号
-
-```js
-const a = 10 + 10 // 20
-const b = 10 + '10' // '1010'
-const c = undefined + 10 //NaN
-const d = undefined + '10' // 'undefined100'
 ```
+## 解释一下原型链
 
-Q: `==` 与 `===` 的区别
+### 答题思路
 
-A:
+这是一道考察 JavaScript 面向对象编程中原型链概念的理论题。在回答这个问题时，需要解释清楚什么是原型链，原型链的作用，以及 JavaScript 中原型链的工作原理。
 
-`==` 会进行自动类型转换
+### 答题关键点
 
-`===`不会自动类型转换
+1. 原型链的定义：原型链是 JavaScript 中实现对象继承的主要机制。
+2. 原型链的作用：通过原型链，一个对象可以使用它的原型上的属性和方法，也可以使用原型的原型上的属性和方法。
+3. JavaScript 中的原型链工作原理：当试图访问一个对象的属性时，JavaScript 会首先在对象本身的属性中查找，如果没有找到，那么 JavaScript 会在该对象的原型（即它的 `__proto__` 属性，也就是它的构造函数的 `prototype` 属性）中查找，如果还没有找到，就会去原型的原型中查找，依此类推，直到找到属性或达到原型链的末端（`null`）。
 
-推荐平时使用用 `===`
+### 答案示例
 
-Q: 什么是 falsely 变量？
+在 JavaScript 中，每一个对象都有一个内部属性 [[Prototype]]，它指向了该对象的原型。当我们访问一个对象的属性时，如果这个对象自身没有这个属性，那么 JavaScript 就会去它的 [[Prototype]] 所指向的原型对象上去找，这就形成了一条原型链。
 
-A:
+这种通过原型链查找属性的方式，使得我们可以在对象上调用不属于该对象自身但属于其原型或原型链上的其他对象的方法或属性，实现了一种类似于继承的功能。
 
-falsely 变量就是双非之后为 `false` 的变量
+例如，当我们创建一个新的数组，比如 `let arr = []`，这个数组自身是没有 `push` 方法的，但我们可以调用 `arr.push(1)`，这是因为 `arr` 的原型（也就是 `Array.prototype`）上有 `push` 方法，当我们调用 `arr.push` 时，JavaScript 就会沿着原型链去查找 `push` 方法。
 
-```js
-!! NaN === false
+总的来说，原型链是 JavaScript 实现继承和属性查找的重要机制。
+
+### 关键点脑图
+
+```markdown
+- 原型链
+  - 定义：原型链是 JavaScript 实现对象继承的主要机制
+  - 作用：通过原型链，一个对象可以使用它的原型上的属性和方法
+  - 工作原理
+    - 查找属性：先在对象本身查找，未找到则在原型上查找，依次沿着原型链向上查找，直到找到或到达 `null`
+
 ```
+## 描述一下 this 关键字的工作原理。
 
-if 判断和逻辑运算，都是判断 truely 和 falsely 变量而不是直接判断 `true` 和 `false`
+### 答题思路
 
-例如：
+这是一道考察 JavaScript 中 `this` 关键字使用和工作原理的理论题。在回答这个问题时，需要解释清楚 `this` 的含义以及在不同情况下 `this` 的指向。
 
-```js
-'' && '10' // ''
-100 || NaN // 100
+### 答题关键点
+
+1. `this` 的定义：`this` 是 JavaScript 中的一个关键字，它代表函数运行时的上下文对象。
+2. `this` 的指向：在全局环境、函数调用、方法调用、构造函数、箭头函数和 `call/apply/bind` 中 `this` 的指向。
+
+### 答案示例
+
+在 JavaScript 中，`this` 是一个特殊的变量，它在每个函数内部都有定义，指向函数的运行环境或者说上下文。`this` 的值取决于函数的调用方式，具体如下：
+
+1. **全局环境**：在全局环境中（不在任何函数中），`this` 指向全局对象。在浏览器中，全局对象就是 `window`。
+2. **函数调用**：如果一个函数不是作为对象的方法调用，那么 `this` 通常指向全局对象。严格模式下，`this` 会是 `undefined`。
+3. **方法调用**：如果一个函数作为对象的方法调用，`this` 就指向那个对象。
+4. **构造函数**：在构造函数中，`this` 指向正在被构造的新对象。
+5. **箭头函数**：箭头函数没有自己的 `this`，箭头函数中的 `this` 与定义箭头函数时的环境中的 `this` 保持一致。
+6. **call/apply/bind**：使用 `call`、`apply` 或 `bind` 可以手动设置函数中 `this` 的指向。
+
+需要注意的是，`this` 的指向是在函数调用时确定的，而不是在函数定义时确定。
+
+### 关键点脑图
+
+```markdown
+- this 关键字
+  - 定义：this 是函数运行时的上下文对象
+  - 指向
+    - 全局环境：指向全局对象
+    - 函数调用：指向全局对象（非严格模式），undefined（严格模式）
+    - 方法调用：指向调用方法的对象
+    - 构造函数：指向正在被构造的新对象
+    - 箭头函数：没有自己的 this，指向定义箭头函数时的环境中的 this
+    - call/apply/bind：指向手动设置的对象
+
 ```
-
-Q: 怎样区分 truely 和 falsely 变量
-
-A:
-
-以下为 falsely 变量：
-*  0
-*  NaN
-*  ''
-*  null
-*  undefined
-*  false
-
-其它都是 truely 变量
-
-Q: 深拷贝和浅拷贝的区别
-
-A: 
-浅拷贝和深拷贝的区别主要是针对引用类型。
-如果是深拷贝，复制后的变量改变，不会影响老的变量。
-浅拷贝，只是复制地址，复制后的变量改变，也会影响老的变量。
-
-### 题目
-
-Q: 手写深拷贝
-
-A:
-
-```js
-function deepClone(entry) {
-    let result = null
-    // step1: 如果入参是值类型就返回
-    if(typeof entry !== 'object' || entry == null) {
-        // 递归真正执行的语句
-        return entry
-    }
-    // Step2: 定义result 类型
-    if(entry instanceof Array) {
-        result = []
-    } else {
-        result = {}
-    }
-
-    // Step3:
-    for(let key in entry) {
-        // 对原型的处理
-        if(entry.hasOwnProperty(key)){
-            // 此处递归
-            result[key] = deepClone(entry[key])
-        }
-    }
-
-    return result
-}
-```
-
-## 作用域和闭包
-
-### 知识点
-
-* 编译阶段和执行阶段
-* 作用域和自由变量
-* 闭包
-* this
-
-#### 编译阶段和执行阶段
-
-Q: 编译阶段和执行阶段的区别
-js是解释型的语言，代码执行有两个阶段，编译阶段和执行阶段。在执行阶段之前，会先预解析代码，为执行代码做准备。
-* 编译阶段
-声明前置
-词法作用域
-根据规范抛出特定的错误
-生成运行时需要的代码。
-
-* 执行阶段
-解析被使用的代码
-生成 AST
-执行上下文
-动态作用域
-抛出所有的语法错误
-  
-
-Q: 什么是声明前置?
-
-A: 就是在`编译阶段`，函数声明和变量声明都会放在最前面。但只是声明放在前面，变量不会赋值，函数不会执行。如果名字相同，函数声明会覆盖变量声明。
-
-例如以下代码：
-```
-console.log( a )
-var a = 1
-function a(){}
-console.log( a )
-```
-可以等价于：
-```
-var a
-function a(){}
-
-console.log( a ) // function a(){}
-a = 1
-console.log( a ) // 1
-```
-#### 作用域
-
-Q: 什么是作用域?
-
-A:
-
-就是变量作用的范围，如图所示即为作用域（这里图要换）
-
-![](https://raw.githubusercontent.com/jerryjiao/imageUrl/master/1.png?token=ADBBE7CEZHFJFXGBTWBPWEK52VJIE)
-
-作用域在代码预解析阶段就确定了
-
-Q: 作用域分几种类型？
-
-A:
-
-* 全局作用域
-* 函数作用域
-* 块级作用域（ES6，let，const）
-
-Q: 什么是暂时性死区?
-
-A: 
-let,const 声明的变量，存在暂时性死区。在当前块级作用域中，let,const 声明的变量，在赋值之前，都不能对该变量进行额外的访问与操作，否则就会报错。(引用)
-
-
-Q: 什么是自由变量？自由变量的值是什么时候定义？怎么寻找？
-
-A:
-
-* 一个变量在当前作用域没有定义，但被使用了
-* 自由变量时在定义函数的时候，值就确定了（一定是在定义的时候，而不是执行的时候）
-* 函数在执行的过程中，先从自己内部找变量
-* 如果找不到，再从`创建当前函数所在的作用域`去找, 以此往上
-* 如果找不到，会报错 xx is not defined
-
-#### 闭包 
-
-Q: 什么是闭包？
-
-A:
-
-如果在函数里面可以访问外面的变量，那么这个`函数` + 这些 `变量` = `闭包`
-
-闭包在代码解析时就能确定。
-
-![-w453](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/04/16/16185414927693.jpg)
-
-
-Q: 闭包的两种情况
-
-A:
-
-1. 函数作为参数
-
-    ```js
-    function create(fn) {
-        let a = 200
-        fn()
-    }
-
-    function fn() {
-        console.log(a)
-    }
-
-    create(fn) // 200
-    ```
-
-2. 函数作为返回值被返回
-
-    ```js
-    function create() {
-        let a = 100
-        return function(){
-            console.log(a)
-        }
-    }
-    ```
-    
-#### this
-
-Q: this是在什么时候被确定的？
-A: this 的指向，是在执行上下文的创建过程中，被确定的。
-
-明确了这一点，我们就很容易知道，只有在函数调用时，this 的指向才会被确定。
-
-Q: this的不同场景，怎么取值？
-
-A:
-
-做this题的思路就是转换为.call函数，然后看第一个参数是什么。第一个参数，就是最后执行那个函数的点之前的对象。如果没有，就是Undefied，在严格模式下是undefined，非严格模式下是window
-
-```js
-fn() {
-    console.log(this)
-}
-相当于 fn.call(undefined) 如果是undefined就是window
-fn() // 普通函数，this为window
-----------------------------------------------
-obj = {
-    fn: fn
-}
-obj.fn() // 作为对象方法，this的值为这个对象
-----------------------------------------------
-const fn2 = fn.bind({a:1})
-fn2()  // 使用bind/call/apply的话，this即为传入的{a:1}
-----------------------------------------------
-const b = ()=> {console.log(b)}
-
-obj2 = {
-    b:b
-}
-obj2.b()// 箭头函数的this继承父级,这里会打印出window
-----------------------------------------------
-const c = new fn() // new之后，this会绑定在实例c上
-```
-
-Q: call, bind, apply的区别
-
-A: 
- call，bind, apply 都会绑定当前作用域下的this
- call,apply和Bind的区别的区别是，bind方法会返回一个绑定当前this的新函数，但不会执行，call, apply会执行。
- 
- call, apply主要就是传参的格式不同，call是把参数，一个一个传入，apply是通过一个数组传入
-
-### 题目
-
-Q: bind 方法有什么作用？手写 bind 函数
-
-A:
-
-`bind()` 方法创建一个新的函数，在 `bind()` 被调用时，这个新函数的 `this` 被 `bind` 的第一个参数指定，其余的参数将作为新函数的参数供调用时使用。
-
-```js
-// 模拟 bind
-Function.prototype.bind1 = function() {
-    // 将参数拆解为数组
-    const args = Array.prototype.slice.call(arguments)
-
-    // 获取this（数组第一项）
-    const t = args.shift()
-
-    // fn1.bind(...)中的fn1
-    const self = this
-
-    // 返回一个函数
-    return function () {
-        return self.apply(t, args)
-    }
-}
-```
-
-Q: 实际开发中的闭包场景，举例说明 （引用）
-
-A:
-
-* 隐藏数据
-* 做一个简单的cache工具 //TODO: 这是什么意思
-
-
-Q: 创建10个 `<a>` 标签，点击的时候弹出对应的对象（引用）
-
-```js
-let a
-for(let i=0;i<10;i++) {
-    a=document.createElement('a')
-    a.innerHTML = i + '<br>'
-    a.addEventListener('click', function(e){
-        e.preventDefault()
-        alert(i)
-    })
-    document.body.appendChild(a)
-}
-```
-
-Q: 以下代码的执行结果（引用）
-
-```js
-function create() {
-    let a = 200
-    return function(){
-        console.log(a)
-    }
-}
-let fn = create()
-let a = 100
-fn()
-```
-
-A: 200
-
-Q: 以下代码的执行结果（引用）
-
-```js
-function print(fn) {
-    let a = 200
-    fn()
+## JS中new做了什么？
+
+### 答题思路
+
+这是一个关于JavaScript基本概念和原理的问题，可以从以下几个方面来回答：
+
+1. 创建一个新的空对象
+2. 设置这个新对象的__proto__属性指向构造函数的prototype对象
+3. 将构造函数的作用域赋给新对象（也就是将this指向新对象）
+4. 执行构造函数中的代码（为这个新对象添加属性）
+5. 如果构造函数返回了一个对象，那么返回该对象，否则，返回步骤1创建的新对象。
+
+### 答题关键点
+
+- 创建空对象
+- 设置原型链
+- 赋予新对象作用域
+- 执行构造函数
+- 返回对象
+
+### 答案示例
+
+在JavaScript中，当我们使用`new`操作符调用一个函数时，其实做了以下几个步骤：
+
+```jsx
+function newOperator(Con, ...args) {
+  // 1. 创建一个新的空对象
+  let obj = Object.create(null);
+  // 2. 设置这个新对象的__proto__属性指向构造函数的prototype对象
+  obj.__proto__ = Con.prototype;
+  // 3. 将构造函数的作用域赋给新对象（也就是将this指向新对象）
+  let result = Con.apply(obj, args);
+  // 4. 执行构造函数中的代码（为这个新对象添加属性）
+  // 5. 如果构造函数返回了一个对象，那么返回该对象，否则，返回步骤1创建的新对象。
+  return result instanceof Object ? result : obj;
 }
 
-let a = 100
-function fn() {
-    console.log(a)
-}
-print(fn)
 ```
 
-A: 100
-
-Q: 以下题目中的 this 指向哪里？
-
-```js
-const children = {
-    watching() {
-        setTimeout(function(){
-            console.log(this)
-        })
-    }
-}
-```
-
-A:
-
-这里会打印出 `window` ,因为在 `setTimeout` 中，是一个普通函数的执行。
-
-如果想指向这个对象，可以把这个函数变为箭头函数。
-
-Q: 以下函数的执行结果
-```
-var app = {
-    fn1() {
-        setTimeout(function(){
-            console.log(this)
-        }, 10)
-    },
-    fn2() {
-        setTimeout(()=>{
-            console.log(this)
-        },20)
-    },
-    fn3() {
-        setTimeout((function(){
-            console.log(this)
-        }).bind(this), 30)        
-    },
-    fn4: ()=> {
-        setTimeout(()=>{
-            console.log(this)
-        },40)        
-    }
-}
-app.fn1()
-app.fn2()
-app.fn3()
-app.fn4()
-```
-
-A:
+### 关键点脑图
 
 ```
-var app = {
-    fn1() {
-        function fn(){
-            console.log(this)
-        }
-        //过10ms 后执行
-        //fn.call(undefined) ，所以输出 Window
-    },
-    fn2() {
-        //过20ms 执行箭头函数
-        //箭头函数里面没资格有 自己的 this，借用 setTimeout 外面的 this，也就是 app
-    },
-    fn3() {
-        // 创建了一个新函数，这个新函数里面绑定了 外面的this，也就是 app
-        // 20 ms 后执行新函数，输出 this，也就是刚刚绑定的 app    
-    }
-    fn4: ()=> {
-        //过40ms 执行箭头函数
-        //箭头函数里面没资格有 this，用 setTimeout 外面的 this
-        //setTimeout 所在的 fn4也是箭头函数，没资格拥有自己的 this，借用外面的 this ，也就是 Window     
-    }
-}
+- new操作符
+  - 创建空对象
+  - 设置原型链
+    - 新对象的__proto__属性指向构造函数的prototype对象
+  - 赋予新对象作用域
+    - 将this指向新对象
+  - 执行构造函数
+    - 为新对象添加属性
+  - 返回对象
+    - 如果构造函数返回了一个对象，返回该对象
+    - 否则，返回新创建的对象
+
 ```
+## 描述一下闭包，以及它的使用场景。
 
-## 面向对象
-* 原型与原型链
-* new 
-* 继承(原型与class)
+### 答题思路
 
-### 知识点
+这是一道基本的 JavaScript 概念题，旨在测试面试者对闭包的理解和实际应用。回答这个问题时，我们首先要解释什么是闭包，然后再描述它的使用场景。
 
-#### 原型
+### 答题关键点
 
-Q: new 的几个阶段
+- 闭包定义
+- 闭包的使用场景
+- 代码示例
 
-A: 
-创建一个空对象obj
-设置原型链 即 obj . _proto _ = 构造函数.prototype ;
-让构造函数中的this指向obj
-返回对象obj
+### 答案示例
 
+在 JavaScript 中，闭包是一种可以访问其自身作用域、外部函数作用域和全局作用域的函数。它是由函数和创建该函数的词法环境的引用组合而成的。这使得在函数被调用时，即使外部函数已经完成执行，闭包仍然可以访问外部函数的变量和参数。
 
-Q: `instanceof` 的作用？
+闭包的常见使用场景如下：
 
+1. 数据封装和私有方法：闭包可以隐藏内部实现细节，只暴露一些接口供外部调用，形成私有变量或方法。
+2. 事件处理程序和回调：在 JavaScript 中，异步操作、定时器和事件监听器常常需要使用闭包，因为闭包能保存状态和变量。
+3. 实现装饰器：闭包可以用于在不改变原函数的情况下，增加新的功能或行为。
 
-A:
+以下是一段使用闭包进行数据封装的示例代码：
 
-判断属于哪个 class 或者哪个构造函数，可以用来判断数组。
-
-class：
-
-```js
-class Variety {}
-let variety = new Variety();
-
-alert( variety instanceof Variety ); // true
-```
-
-构造函数：
-
-```js
-function Variety() {}
-
-alert( new Variety() instanceof Variety ); // true
-```
-
-Q: 简单介绍原型
-
-A:
-
-* 每个 class 都有 **显式** 原型 prototype 。
-* 每个实例都有 **隐式** 原型 `_proto_` 。
-* 实例的 `_proto_` 指向对应 class 的 prototype 。
-
-#### 原型链
-
-Q: 简述原型，原型链的执行规则
-
-
-A:
-
-1. 如果实例中有⾃身属性则直接使⽤⾃身的属性，如果没有则会在⾃身的隐式原型链中去找，
-⼀直找到最顶级 Object 为⽌，如果都找不到，则最后返回：`null`
-2. 每个构造函数都有⼀个显式原型，且每个显式原型都会对应有⼀个隐式原型，⽽他的隐式原型的⽗级⼜有个显式原型，他们都是⼀级级地往上寻找的，然后⼀直找到树形结构的第⼀层（Object）为终点。
-3. instanceof是为判断此实例或构造函数是否是⽗级继承的
-
-#### class
-
-Q: 如何构建一个 class
-
-A:
-
-* constructor
-* 属性
-* 方法
-
-### 题目
-
-Q: 如何判断数组类型
-
-A:
-
-instanceof
-
-Q: 如何用 class 实现继承？（简单代码实现）
-
-A:
-
-```js
-class Animal() {
-    constructor(name) {
-        this.name = name
-    }
-
-    eat() {
-        console.log(`${this.name} is eating`)
-    }
+```jsx
+function createCounter() {
+    let count = 0;
+    return function() {
+        return ++count;
+    };
 }
 
-class Dog extends Animal() {
-    constructor(name, number) {
-        super(name)
-        this.number = number
-    }
-    run() {
-        console.log(`${this.name} is running`)
-    }
+const counter = createCounter();
+console.log(counter()); // 输出：1
+console.log(counter()); // 输出：2
+
+```
+
+在这个例子中，`createCounter`函数返回一个匿名函数，该匿名函数可以访问到它的父作用域`createCounter`函数中的`count`变量。即使`createCounter`函数已经执行完毕，但是返回的匿名函数仍然可以访问`count`变量，这就形成了一个闭包。
+
+### 关键点脑图
+
+```markdown
+- 闭包
+  - 定义: 一个函数和其相关的词法环境的组合
+  - 使用场景
+    - 数据封装和私有方法
+    - 事件处理程序和回调
+    - 实现装饰器
+  - 示例代码
+    - 创建一个计数器
+
+```
+## JS如何实现类
+
+### 答题思路
+
+这个问题是一个JavaScript的面向对象编程问题，询问的是如何在JavaScript中实现类。我们可以从以下几个角度进行回答：
+
+1. ES6及其之后版本中的类实现方式
+2. ES5及其之前版本中通过函数和原型链实现类的方式
+3. JavaScript中类的一些基本特性，如构造函数、实例方法、静态方法等
+
+### 答题关键点
+
+- ES6中的类定义
+- ES5中的函数和原型链实现类
+- 构造函数
+- 实例方法
+- 静态方法
+
+### 答案示例
+
+在JavaScript中，实现类有两种主要的方式，分别是ES6的语法糖方式和ES5的原型链方式。
+
+1. 在ES6及其之后的版本中，我们可以使用`class`关键字定义类：
+
+```jsx
+class MyClass {
+  constructor(param1, param2) {
+    // 构造函数
+    this.param1 = param1;
+    this.param2 = param2;
+  }
+
+  instanceMethod() {
+    // 实例方法
+    return this.param1 + this.param2;
+  }
+
+  static staticMethod() {
+    // 静态方法
+    return 'This is a static method';
+  }
 }
+
 ```
 
-## 异步与同步
+1. 在ES5及其之前的版本中，我们需要使用函数和原型链来实现类：
 
-### 知识点
-* 单线程和异步
-* 应用场景
-* 回调地狱和 Promise
-* async/await
-* eventHub
-* 宏任务和微任务 
-
-Q: 同步与异步的区别？
-
-A:
-
-同步会阻塞后面程序的运行，
-而异步不会阻塞后面程序的运行。
-
-JS是单线程运行的，只能在同一时间内做一件事，所以JS需要异步
-
-Q: 什么是回调函数？
-
-A:
-函数做为参数传入另一个函数，并且在该函数内被调动
-
-例如:
-```
-function getImg(callback) {
-    var imgUrl = 'xxxx'
-    callback()
+```jsx
+function MyClass(param1, param2) {
+  // 构造函数
+  this.param1 = param1;
+  this.param2 = param2;
 }
-```
 
-Q: 什么是回调地狱？ 怎样解决回调地狱的问题？
+MyClass.prototype.instanceMethod = function() {
+  // 实例方法
+  return this.param1 + this.param2;
+};
 
-A: 主要的原因之一是因为回调地狱是代码嵌套，可以使用promise解决promise问题
-
-例如:
-
-```
-$.post(url1, (data1) =>{
-    console.log(data1)
-
-    $.post(url2, (data2) => {
-        console.log(data2)
-
-        $.post(url3, (data3) => {
-            console.log(data3)
-        })
-    })
-})
+MyClass.staticMethod = function() {
+  // 静态方法
+  return 'This is a static method';
+};
 
 ```
 
-Q: Promise 的基本写法
+### 关键点脑图
 
-A:
 ```
-function getData(url) {
-    return new Promise((resolve, reject) => {
-         setTimeout(() => {
-                resolve('foo');
-            }, 300);
-    })
+- JavaScript类
+  - ES6
+    - class关键字
+    - constructor构造函数
+    - 实例方法
+    - 静态方法
+  - ES5
+    - 函数和原型链
+    - 构造函数
+    - 实例方法
+    - 静态方法
+
+```
+## JS如何实现继承
+
+### 答题思路
+
+这是一个关于JavaScript面向对象编程的问题，询问的是如何在JavaScript中实现类的继承。我们可以从以下几个角度进行回答：
+
+1. ES6及其之后版本中的类继承方式
+2. ES5及其之前版本中通过原型链和构造函数实现类继承的方式
+3. JavaScript中继承的一些基本特性，如子类、父类、超类调用等
+
+### 答题关键点
+
+- ES6中的类继承
+- ES5中的原型链和构造函数实现类继承
+- 子类
+- 父类
+- 超类调用
+
+### 答案示例
+
+在JavaScript中，实现类的继承有两种主要的方式，分别是ES6的语法糖方式和ES5的原型链与构造函数的方式。
+
+1. 在ES6及其之后的版本中，我们可以使用`class`和`extends`关键字定义子类：
+
+```jsx
+class SuperClass {
+  constructor(param) {
+    this.param = param;
+  }
+
+  superMethod() {
+    return this.param;
+  }
 }
-```
 
+class SubClass extends SuperClass {
+  constructor(param, subParam) {
+    super(param);  // 调用父类构造函数
+    this.subParam = subParam;
+  }
 
-Q: Promise有几种状态
-
-A:
-三种：
-
-1.pending  // 正在执行
-2.resolve  // 成功
-3.reject   // 拒绝
-
-Q: Promise then 和catch 会怎样改变Promise状态？
-
-A: 
-* pending 不会触发任何 then catch 回调
-* 状态变为 resolved 会触发后续的 then 回调
-* 状态变为 rejected 会触发后续的 catch 回调
-
-Q: 什么是Promise链？
-
-A:
-Promise可以链式调用，并且上一个then中return的值，是下一个then的入参
-例如
-```
-start()
-  .then(data => {
-    // promise start
-    console.log('result of start: ', data);
-    return Promise.resolve(1); // p1
-  })
-  .then(data => {
-    // promise p1
-    console.log('result of p1: ', data);
-    return Promise.reject(2); // p2
-  })
-```
-
-Q: 请简单画出EventHub的流程?
-
-A: 
-1. 将 console.log("Hi") 推入调用栈，调用栈会执行代码
-2. 执行代码，控制台打印“Hi”，调用栈清空
-3. 执行 setTimeout，setTimeout由浏览器定义，不是ES6的内容；将定时器放到Web APIs中，到时间后将回调函数放到回调函数队列中
-4. 执行完了setTimeout， 清空调用栈
-5. console.log("Bye")进入调用栈，执行，调用栈清空
-6. 同步代码被执行完,，回调栈空，浏览器内核启动时间循环机制
-7. 五秒之后，定时器将cb1推到回调函数队列中
-8. 事件循环将cb1放入调用栈
-
-![-w994](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/04/16/16185407397870.jpg)
-
-
-Q: async/await 的基本用法?
-
-A: 
-1. async/await消灭了异步回调，和Promise相辅相成。
-2. 执行async 函数，返回的是Promise对象
-3. await 相当于 Promise 的 then
-4. try...catch 可以捕获异常，代替了Promise 的 catch
-
-Q: 宏任务与微任务的区别？ 宏任务与微任务有哪些？
-
-A: 
-
-微任务： 其实是es规定的，就是其实是js代码中的一些异步方法（promise）
-宏任务： 是w3c规定的一些方法，也就是浏览器中的一些异步方法(settimeout,ajax)
-
-因为微任务是在DOM渲染之前执行的，而宏任务是在DOM渲染之后执行的，所以先执行微任务再执行宏任务。
-
-Q: 宏任务，微任务题的解题思路
-
-A: 
-1. 先执行同步代码
-2. 再执行微任务代码(await 后面为微任务)
-3. 再执行宏任务代码
-
-Q: 代码的执行步骤
-
-A: 
-1. 同步代码
-2. 执行微任务
-3. （尝试触发Dom渲染）
-4. 触发EventLoop,执行宏任务
-
-### 题目
-
-
-Q: 手写用Promise 加载一张图片（异步）
-
-A:
-
-```
-function loadImg(src) {
-    const p = new Promise(
-        (resolve, reject) =>{
-            const img = document.createElement('img')
-            img.onload = () => {
-                resolve(img)
-            }
-            img.onerror = () => {
-                const err = new Error(`图片加载失败${src}`)
-                reject(err)
-            }
-            img.src=src
-        }
-    )
-    return p
+  subMethod() {
+    return this.subParam;
+  }
 }
+
 ```
 
-Q: 手写promise
+1. 在ES5及其之前的版本中，我们需要使用原型链和构造函数来实现类的继承：
 
-A: 
-```
- class Promise2 {
-     succeed = null
-     fail = null
-     state = 'pending'
+```jsx
+function SuperClass(param) {
+  this.param = param;
+}
 
-     constructor(fn) {
-         fn(this.resolve.bind(this), this.reject.bind(this))
-     }
-     resolve(result) {
-         setTimeout(() => {
-         this.state = 'fulfilled'
-         this.succeed(result)
-         })
-     }
+SuperClass.prototype.superMethod = function() {
+  return this.param;
+};
 
-     reject(reason) {
-         setTimeout(() => {
-         this.state = 'rejected'
-         this.fail(reason)
-         })
-     }
+function SubClass(param, subParam) {
+  SuperClass.call(this, param);  // 调用父类构造函数
+  this.subParam = subParam;
+}
 
-     then(succeed, fail) {
-         this.succeed = succeed
-         this.fail = fail
-     }
- }
+SubClass.prototype = Object.create(SuperClass.prototype);  // 建立原型链
+SubClass.prototype.constructor = SubClass;  // 修正构造函数
+SubClass.prototype.subMethod = function() {
+  return this.subParam;
+};
+
 ```
 
+### 关键点脑图
 
-Q: 以下如图所示程序的执行结果：
-![](https://raw.githubusercontent.com/jerryjiao/imageUrl/master/WX20191120-225142@2x.png)
-
-A: 1,3, 5, 4, 2
-
-Q: 以下代码的执行结果
 ```
-Promise.resolve().then(() => {
-    console.log(1)
-}).catch(() => {
-    console.log(2)
-}).then(() => {
-    console.log(3)
-})
+- JavaScript继承
+  - ES6
+    - class关键字
+    - extends关键字
+    - super超类调用
+  - ES5
+    - 原型链
+    - 构造函数调用
+    - Object.create
+    - constructor修正
+
+```
+## 描述一下 JavaScript 的异步编程，以及 Promise、async/await 的使用。
+
+### 答题思路
+
+这是一个关于JavaScript异步编程的问题，包含三个主要部分：JavaScript的异步编程，Promise的使用，以及async/await的使用。我们可以分别对这三个部分进行描述。
+
+### 答题关键点
+
+- JavaScript的异步编程
+- Promise的使用
+- async/await的使用
+
+### 答案示例
+
+1. JavaScript的异步编程：JavaScript是单线程的，但它通过事件循环（Event Loop）实现了非阻塞I/O操作。在JavaScript中，当一个异步任务被发起，它会被放到事件队列中，而不会立即执行。事件循环会不断地检查这个队列，当事件准备好被处理时（例如：一个定时器已经到期，或者一个Ajax请求已经返回数据），事件循环会将其放到调用栈中执行。
+2. Promise的使用：Promise是JavaScript中处理异步操作的一种方式，它代表了一个可能已经完成、可能还没有完成的异步操作的结果。Promise对象有三种状态：pending（进行中）、fulfilled（已成功）和rejected（已失败）。状态的改变只能是：pending到fulfilled，或者pending到rejected，状态一旦改变，就不会再变。
+
+```jsx
+let promise = new Promise((resolve, reject) => {
+  // 异步操作
+  if (/* 操作成功 */) {
+    resolve(value);
+  } else {
+    reject(error);
+  }
+});
+
+promise.then(value => {
+  // success
+}).catch(error => {
+  // failure
+});
+
 ```
 
-A: 1,3
+1. async/await的使用：async/await是ES7引入的，用于简化Promise的使用，使异步代码看起来更像同步代码。`async`表示一个函数是异步的，函数的返回值将是一个Promise。`await`只能在`async`函数中使用，表示等待一个Promise解析，然后返回结果值。
 
-Q: 以下代码的执行结果
-```
-Promise.resolve().then(() => { // 返回 rejected 状态的 promise
-    console.log(1)
-    throw new Error('erro1')
-}).catch(() => { // 返回 resolved 状态的 promise
-    console.log(2)
-}).then(() => {
-    console.log(3)
-})
-```
+```jsx
+async function asyncFunc() {
+  try {
+    let value = await promise;
+    console.log(value);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-A: 1,2,3
-
-Q: 以下代码的执行结果
-```
-Promise.resolve().then(() => { // 返回 rejected 状态的 promise
-    console.log(1)
-    throw new Error('erro1')
-}).catch(() => { // 返回 resolved 状态的 promise
-    console.log(2)
-}).catch(() => { // 这里是catch
-    console.log(3)
-})
 ```
 
-A: 1,2
+### 关键点脑图
 
-Q: promise题分析的一些注意点
+```
+- JavaScript异步编程
+  - 单线程
+  - 事件循环
+  - 非阻塞I/O操作
+- Promise
+  - 状态：pending、fulfilled、rejected
+  - then方法
+  - catch方法
+- async/await
+  - async表示函数是异步的
+  - await等待Promise解析
+  - 错误处理
 
-A: 
-await 后面记得也是微任务
-![](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/08/16/16186449998022.jpg)
-
-初始化promise是，函数会立即执行
-![](https://jerryblog-1254426031.cos.ap-nanjing.myqcloud.com/2021/08/16/16186450997532.jpg)
+```
