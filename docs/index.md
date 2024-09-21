@@ -5,12 +5,6 @@ sidebar: auto
 
 Welcome to the Frontend Basics Anki project. This site is designed to help you memorize and review frontend development concepts using the Ebbinghaus forgetting curve method.
 
-## Contents
-
-- [Frontend Basics](/): Basic knowledge of frontend development
-- [Interview Questions](/real): Real interview questions
-- [Coding Questions](/write): Hands-on coding exercises
-
 ## chapter01 Variables and Calculations
 ### Knowledge Points
 * Variable Types

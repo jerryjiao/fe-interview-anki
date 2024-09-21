@@ -46,7 +46,4 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/jerryjiao/fe-interview-anki' }
     ]
   },
-  mermaid:{
-    //mermaidConfig !theme here works for ligth mode since dark theme is forced in dark mode
-  },
 })
